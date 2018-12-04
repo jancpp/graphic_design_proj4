@@ -81,7 +81,7 @@ void SceneElement::establishMaterial(const PhongMaterial &matl)
     glUniform3fv(shaderIF->ppuLoc("kd"), 1, matl.kd);
     glUniform3fv(shaderIF->ppuLoc("ks"), 1, matl.ks);
     glUniform1f(shaderIF->ppuLoc("m"), matl.shininess);
-    // glUniform1f(shaderIF->ppuLoc("alpha"), matl.alpha);
+    glUniform1f(shaderIF->ppuLoc("alpha"), matl.alpha);
 }
 
 // NOTE: You may want to modify the interface to this method so that you
@@ -114,6 +114,13 @@ void SceneElement::establishView()
     float m[16];
     glUniformMatrix4fv(shaderIF->ppuLoc("mc_ec"), 1, false, mc_ec.extractColMajor(m));
     glUniformMatrix4fv(shaderIF->ppuLoc("ec_lds"), 1, false, ec_lds.extractColMajor(m));
+
+    ExtendedController *ec = dynamic_cast<ExtendedController *>(Controller::getCurrentController());
+    glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
+    if (ec->drawingOpaque())
+        glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
+    else
+        glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
 }
 
 GLuint SceneElement::readTextureImage(const std::string& imgFileName)

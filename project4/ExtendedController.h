@@ -9,8 +9,12 @@ class ExtendedController : public GLFWController
 {
 protected:
 	void handleMouseMotion(int x, int y);
-public:
-	ExtendedController(const std::string& name, int rcFlags = 0);
+	void handleDisplay();
+	bool drawingOpaqueObjects;
+
+public : 	
+	ExtendedController(const std::string &name, int rcFlags = 0);
+	bool drawingOpaque() const;
 };
 
 #endif

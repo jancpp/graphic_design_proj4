@@ -85,9 +85,6 @@ void TVSet::getMCBoundingBox(double *xyzLimits) const
 
 void TVSet::prepareForFace(void *caller, int faceIndex)
 {
-    // check if texure is active
-    // std::cout << "caller: " << caller << ", faceIndex: " << faceIndex << "\n";
-
     if (caller != nullptr) {
         TVSet *tv = reinterpret_cast<TVSet*>(caller);
         if (faceIndex == 5) {
@@ -105,44 +102,20 @@ void TVSet::render()
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-    
-    // 2. Establish "mc_ec" and "ec_lds" matrices
+
     establishView();
-    
-    // 3. Establish Lighting environment
-    //    complete the implementation of SceneElement::establishLightingEnvironment
-    //    and then call it here.
     establishLightingEnvironment();
     renderTVSet();
-    
-    // 6. Reestablish previous shader program
     glUseProgram(pgm);
 }
 
 void TVSet::renderTVSet()
 {
-    // 4. Establish material property parameters.
-    //    complete the implementation of SceneElement::establishMaterial
-    //    and then call it here.
-    // establishMaterial(tvMatl);
-    // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 3; currentlyDrawingPiece++)
-    //     if (piecesR[currentlyDrawingPiece] != nullptr)
-    //         piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    
     establishMaterial(tvMatl); // black
     if (piecesR[0] != nullptr)
         piecesR[0]->renderShape(prepareForFace, this);
     if (piecesR[1] != nullptr)
-        piecesR[1]->renderShape(prepareForFace, this);
+        piecesR[1]->renderShape(nullptr, nullptr);
     if (piecesR[2] != nullptr)
-        piecesR[2]->renderShape(prepareForFace, this);
-    
-    
-    // 5. Establish any other attributes and make one or more calls to
-    //    glDrawArrays and/or glDrawElements
-    //    If all or part of this model involves texture mapping (project 4
-    //    only), complete the implementation of SceneElement::establishTexture
-    //    and call it from here as needed immediately before any glDrawArrays
-    //    and/or glDrawElements calls to which texture is to be applied.
-    // establishTexture();
+        piecesR[2]->renderShape(nullptr, nullptr);
 }

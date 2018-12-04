@@ -23,15 +23,15 @@ Room::Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const 
     defineFloorGeometry(floorTexImageSource, d);
     defineBackWallGeometry();
     defineRightWallGeometry();
-    defineCeilingGeometry();
     defineRugGeometry(rugTexImageSource, rugWidth, rugDepth);
+    // defineCeilingGeometry();
 }
 
 Room::~Room()
 {
     glDeleteBuffers(1, vboBackWall);
     glDeleteBuffers(1, vboRightWall);
-    glDeleteBuffers(1, vboCeiling);
+    // glDeleteBuffers(1, vboCeiling);
     glDeleteBuffers(1, vboFloor);
     glDeleteBuffers(1, vboRug);
     glDeleteVertexArrays(NUM_PPA_ATTRIBUTES, vao);
@@ -41,10 +41,9 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 {
 
 
-    texID = readTextureImage(floorTexImageSource);
-    std::cout << "texID fl: " << texID << "\n";
+    texIDfloor = readTextureImage(floorTexImageSource);
 
-                                     vec3 *normals = new vec3[4];
+    vec3 *normals = new vec3[4];
     vec3 *mcPosition = new vec3[4];
     vec2 *texCoords = new vec2[4];
 
@@ -213,65 +212,14 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         delete[] mcPosition;
     }
 
-    void Room::defineCeilingGeometry()
-    {
-        vec3 *normals = new vec3[4];
-        vec3 *mcPosition = new vec3[4];
-
-        vec3 normalsValues[4] = {
-            {0.0, 0.0, -1.0},
-            {0.0, 0.0, -1.0},
-            {0.0, 0.0, -1.0},
-            {0.0, 0.0, -1.0}};
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                normals[i][j] = normalsValues[i][j];
-            }
-        }
-
-        vec3 mcPositionValues[4] = {
-            {xmin, ymin, zmax},
-            {xmax, ymin, zmax},
-            {xmin, ymax, zmax},
-            {xmax, ymax, zmax}};
-
-        for (int i = 0; i < 4; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                mcPosition[i][j] = mcPositionValues[i][j];
-            }
-        }
-
-        glBindVertexArray(vao[3]);
-
-        glGenBuffers(2, vboCeiling);
-
-        glBindBuffer(GL_ARRAY_BUFFER, vboCeiling[0]);
-        glBufferData(GL_ARRAY_BUFFER, 4 * 3 * sizeof(float), mcPosition, GL_STATIC_DRAW);
-        glVertexAttribPointer(shaderIF->pvaLoc("mcPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(shaderIF->pvaLoc("mcPosition"));
-
-        glBindBuffer(GL_ARRAY_BUFFER, vboCeiling[1]);
-        glBufferData(GL_ARRAY_BUFFER, 4 * 3 * sizeof(vec3), normals, GL_STATIC_DRAW);
-        glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
-        glVertexAttribPointer(shaderIF->pvaLoc("mcNormal"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-        glEnableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
-
-        delete[] normals;
-        delete[] mcPosition;
-    }
+    
 
     void Room::defineRugGeometry(const char *rugTexImageSource,
                                  float rugWidthIn, float rugDepthIn)
     {
 
-        //texID = readTextureImage(rugTexImageSource);
+        texIDrug = readTextureImage(rugTexImageSource);
 
-        std::cout << "texID rug: " << texID << "\n";
         vec3 *normals = new vec3[4];
         vec3 *mcPosition = new vec3[4];
         vec2 *texCoords = new vec2[4];
@@ -316,7 +264,7 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
             }
         }
 
-        glBindVertexArray(vao[4]);
+        glBindVertexArray(vao[3]);
 
         glGenBuffers(3, vboFloor);
 
@@ -341,6 +289,58 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         delete[] texCoords;
     }
 
+    void Room::defineCeilingGeometry()
+    {
+        vec3 *normals = new vec3[4];
+        vec3 *mcPosition = new vec3[4];
+
+        vec3 normalsValues[4] = {
+            {0.0, 0.0, -1.0},
+            {0.0, 0.0, -1.0},
+            {0.0, 0.0, -1.0},
+            {0.0, 0.0, -1.0}};
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                normals[i][j] = normalsValues[i][j];
+            }
+        }
+
+        vec3 mcPositionValues[4] = {
+            {xmin, ymin, zmax},
+            {xmax, ymin, zmax},
+            {xmin, ymax, zmax},
+            {xmax, ymax, zmax}};
+
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < 3; j++)
+            {
+                mcPosition[i][j] = mcPositionValues[i][j];
+            }
+        }
+
+        glBindVertexArray(vao[4]);
+
+        glGenBuffers(2, vboCeiling);
+
+        glBindBuffer(GL_ARRAY_BUFFER, vboCeiling[0]);
+        glBufferData(GL_ARRAY_BUFFER, 4 * 3 * sizeof(float), mcPosition, GL_STATIC_DRAW);
+        glVertexAttribPointer(shaderIF->pvaLoc("mcPosition"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(shaderIF->pvaLoc("mcPosition"));
+
+        glBindBuffer(GL_ARRAY_BUFFER, vboCeiling[1]);
+        glBufferData(GL_ARRAY_BUFFER, 4 * 3 * sizeof(vec3), normals, GL_STATIC_DRAW);
+        glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
+        glVertexAttribPointer(shaderIF->pvaLoc("mcNormal"), 3, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
+
+        delete[] normals;
+        delete[] mcPosition;
+    }
+
     void Room::getMCBoundingBox(double *xyzLimits) const
     {
         xyzLimits[0] = xmin;
@@ -363,8 +363,8 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         renderFloor();
         renderBackWall();
         renderRightWall();
-        // renderCeiling();
         renderRug();
+        // renderCeiling();
 
         glUseProgram(pgm);
     }
@@ -383,44 +383,47 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 
     void Room::renderBackWall()
     {
+
+        wmatl.alpha = 0.5;
         establishMaterial(wmatl);
+        glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
 
         glBindVertexArray(vao[1]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, -1.0, 0.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
+        // glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
     }
+
     void Room::renderRightWall()
     {
         establishMaterial(wmatl);
-        establishTexture();
 
         glBindVertexArray(vao[2]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), -1.0, 0.0, 0.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
     }
-    void Room::renderCeiling()
-    {
-        establishMaterial(cmatl);
-
-        glBindVertexArray(vao[3]);
-        glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
-        glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, -1.0);
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-        glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
-    }
+    
     void Room::renderRug()
     {
         establishMaterial(rmatl);
         establishTexture();
 
-        glBindVertexArray(vao[4]);
+        glBindVertexArray(vao[3]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, 1.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         // TURN OFF your "using a texture map" uniform variable before leaving.
         glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
+    }
+
+    void Room::renderCeiling()
+    {
+        establishMaterial(cmatl);
+        
+        glBindVertexArray(vao[4]);
+        glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
+        glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, -1.0);
+        glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }

@@ -17,7 +17,7 @@
 
 typedef float vec2[2];
 typedef float vec3[3];
-const int NUM_PPA_ATTRIBUTES = 5;
+const int NUM_PPA_ATTRIBUTES = 4;
 
 class Room : public SceneElement
 {
@@ -34,8 +34,8 @@ public:
   void renderFloor();
   void renderBackWall();
   void renderRightWall();
-  void renderCeiling();
   void renderRug();
+  void renderCeiling();
 
 private:
   PhongMaterial fmatl, rmatl, cmatl, wmatl;
@@ -47,6 +47,8 @@ private:
   GLuint vboRightWall[1];
   GLuint vboRug[1];
   GLuint vboCeiling[1];
+  GLuint texIDfloor = 0;
+  GLuint texIDrug = 0;
 
   void defineFloorGeometry(const char *floorTexImageSource, const float d);
   void defineRugGeometry(const char *rugTexImageSource, float rugWidthIn, float rugDepthIn);

@@ -119,12 +119,28 @@ void ECenter::renderECenter()
     // 4. Establish material property parameters.
     //    complete the implementation of SceneElement::establishMaterial
     //    and then call it here.
+    
+    // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 5; currentlyDrawingPiece++)
+    //     if (piecesR[currentlyDrawingPiece] != nullptr)
+    //         piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
+    
     establishMaterial(ecmatl);
-    for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 5; currentlyDrawingPiece++)
-        if (piecesR[currentlyDrawingPiece] != nullptr)
-            piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    
-    
+    if (piecesR[0] != nullptr)
+        piecesR[0]->renderShape(prepareForFace, this);
+    if (piecesR[1] != nullptr)
+        piecesR[1]->renderShape(prepareForFace, this);
+    if (piecesR[2] != nullptr)
+        piecesR[2]->renderShape(prepareForFace, this);
+    ecmatl.alpha = 0.5;
+    establishMaterial(ecmatl);
+    glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
+
+    if (piecesR[3] != nullptr)
+        piecesR[3]->renderShape(prepareForFace, this);
+    if (piecesR[4] != nullptr)
+        piecesR[4]->renderShape(prepareForFace, this);
+    ecmatl.alpha = 1.0;
+
     // 5. Establish any other attributes and make one or more calls to
     //    glDrawArrays and/or glDrawElements
     //    If all or part of this model involves texture mapping (project 4

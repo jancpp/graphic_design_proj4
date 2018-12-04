@@ -11,9 +11,8 @@ in PVA
 
 uniform sampler2D textureMap;
 uniform int usingTextureMap = 0;
-// You will also likely need a couple other uniforms as
-// discussed in class...
-
+uniform int sceneHasTranslucentObjects = 0;
+uniform int drawingOpaqueObjects = 1;
 
 // For lighing model:
 const int MAX_NUM_LIGHTS = 4;
@@ -40,7 +39,7 @@ uniform float alpha = 1.0;
 uniform int actualNumLights = 3;
 
 // output color from the lighting model:
-out vec4 fragmentColor;
+out vec4 fragColor;
 
 vec4 evaluateLightingModel()
 {
@@ -96,31 +95,35 @@ vec4 evaluateLightingModel()
 
 vec4 composeColor(vec4 lmColor, vec4 tColor)
 {
-	// What color arithmetic do we want to perform? Simplest
-	// is just to multiply the two together, but you may want
-	// to explore other options...
-	// vec4 combinedColor = the result of that color arithmetic
-	// vec4 combinedColor = lmColor * tColor;
-	vec4 combinedColor = (tColor+2 * lmColor)/3;
+	vec4 combinedColor = (tColor + 2 * lmColor) / 3;
 
-    // vec4 combinedColor =  (tColor+2*lmColor)/3;
 	return combinedColor;
 }
 
 void main ()
 {
-	vec4 lightModelColor = evaluateLightingModel();
+	vec4 color = evaluateLightingModel();
 	if (usingTextureMap == 1) {
 		vec4 textureColor = texture(textureMap, pvaIn.texCoords);
-        // fragmentColor = textureColor; //remove TODO
-		fragmentColor = composeColor(lightModelColor, textureColor);
-    } else {
-        fragmentColor = lightModelColor;
+		color = composeColor(color, textureColor);
+    } 
+    else if (sceneHasTranslucentObjects == 1) {
+        if (drawingOpaqueObjects == 1)
+            if (color.a < 1.0)
+                discard;
+            else
+                fragColor = color;
+        else if (color.a < 1)
+            fragColor = color;
+        else
+            discard;
     }
+    else
+        fragColor = color;
 }
 
 // project 3:
 // void main ()
 // {
-//     fragmentColor = evaluateLightingModel();
+//     fragColor = evaluateLightingModel();
 // }

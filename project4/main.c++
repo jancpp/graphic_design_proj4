@@ -31,7 +31,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                             0.5, 0.8, 0.5,  // ka, kd, ks
                             25.0, 1.0);     // m, alpha
     // rug
-    PhongMaterial rugMatl(0.5, 0.25, 0.25,
+    PhongMaterial rugMatl(0.75, 0.1, 0.1,
                           0.5, 0.1, 0.01,
                           2.0, 1.0);
     // ceiling
@@ -52,7 +52,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                        ceilingMatl, wallMatl,
                        p1,u1,
                        roomWidth, roomHeight, roomDepth);
-    c.addModel(r1);
+    // c.addModel(r1);
 
     // couch
     double couchHeight = 36.0, couchWidth = 100.0, couchDepth = 38.0;
@@ -62,14 +62,14 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                             2.0, 1.0);
     Couch *c1 = new Couch(sIF, couchMatl, p2, u1,
                           4.0, 3.0, 5.0, couchWidth, couchHeight, couchDepth);
-    c.addModel(c1);
+    // c.addModel(c1);
 
     // arm chair
     double armChairHeight = 36.0, armChairWidth = 56.0, armChairDepth = 38.0;
     cryph::AffPoint p22(0.01, (roomDepth - armChairWidth) / 2, 0.0);
     Couch *c2 = new Couch(sIF, couchMatl, p22, v1,
                           4.0, 3.0, 5.0, armChairWidth, armChairHeight, armChairDepth);
-    c.addModel(c2);
+    // c.addModel(c2);
 
     // left end table
     double endTableHeight = 25.0, endTableDepth = 25.0, endTableWidth = 23.0;
@@ -79,13 +79,13 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                             2.0, 1.0);
     Table *t1 = new Table(sIF, tableMatl, p3, u1,
                           4.5, 2.0, endTableWidth, endTableHeight, endTableDepth);
-    c.addModel(t1);
+    // c.addModel(t1);
 
     // right end table
     cryph::AffPoint p4(p2.x + couchWidth + 2.0, roomDepth, 0.0);
     Table *t2 = new Table(sIF, tableMatl, p4, u1,
                           4.5, 2.0, endTableWidth, endTableHeight, endTableDepth);
-    c.addModel(t2);
+    // c.addModel(t2);
 
     // table
     double tableHeight = 18.0, tableDepth = 28.0, tableWidth = 48.0;
@@ -94,7 +94,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                        0.0);
     Table *t3 = new Table(sIF, tableMatl, p5, u1,
                           4.5, 2.0, tableWidth, tableHeight, tableDepth);
-    c.addModel(t3);
+    // c.addModel(t3);
 
     // lamps
     double lampHeight = 29.0, topRadius = 5.0, midRadius = 10.0,
@@ -121,7 +121,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         topRadius, midRadius,
                         poleHeight, poleRadius,
                         baseRadius);
-    c.addModel(l1);
+    // c.addModel(l1);
 
     // right lamp
     cryph::AffPoint p7(p4.x + endTableWidth / 2,
@@ -133,7 +133,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         topRadius, midRadius,
                         poleHeight, poleRadius,
                         baseRadius);
-    c.addModel(l2);
+    // c.addModel(l2);
 
     // entertainment center
     double ecHeight = 30.0, ecWidth = 60.0, ecDepth = 28.0;
@@ -142,7 +142,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                          0.5, 0.2, 0.1,
                          10.0, 1.0);
     ECenter *ec1 = new ECenter(sIF, ecMatl, p8, -v1, ecWidth, ecHeight, ecDepth);
-    c.addModel(ec1);
+    // c.addModel(ec1);
 
     // TV set
     double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
@@ -167,7 +167,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     Light *l3 = new Light(sIF, poleMatl, bottomMatl,
                           p10, u1,
                           heigth, radius);
-    // c.addModel(l3);
+    // // c.addModel(l3);
 
     //tree
     PhongMaterial treeMatl(0.1, 0.8, 0.1,
@@ -192,22 +192,22 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     Tree *xmasTreeTop = new Tree(sIFwGeoL, treeMatl,
                                  p11, u1,
                                  treeHeigth - 3.0, topRadius - 3.0, midRadius - 3.0, baseRadius - 3.0);
-    c.addModel(xmasTreeTop);
+    // c.addModel(xmasTreeTop);
     Lamp *xmasTreeStand = new Lamp(sIF, poleMatl, poleMatl, bulbMatl,
                                    p12, u1,
                                    60.0,
                                    0.2, 1.0,
                                    30, 1.0,
                                    topRadius);
-    c.addModel(xmasTreeStand);
+    // c.addModel(xmasTreeStand);
     Ornaments *xmasOrnamentsYellow = new Ornaments(sIFwGeoM, yOrnMatl,
                                                    p11, u1,
                                                    treeHeigth, topRadius, midRadius, baseRadius, 2);
-    c.addModel(xmasOrnamentsYellow);
+    // c.addModel(xmasOrnamentsYellow);
     Ornaments *xmasOrnamentsRed = new Ornaments(sIFwGeoM, rOrnMatl,
                                                    p11, u1,
                                                    treeHeigth, topRadius, midRadius, baseRadius, 4);
-    c.addModel(xmasOrnamentsRed);
+    // c.addModel(xmasOrnamentsRed);
 }
 
 void set3DViewingInformation(double overallBB[])

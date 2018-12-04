@@ -14,6 +14,7 @@
 #include "ModelView.h"
 #include "PhongMaterial.h"
 #include "ShaderIF.h"
+#include "ExtendedController.h"
 
 static const int MAX_NUM_LIGHTS = 4; // MUST BE KEPT SAME AS IN the shader program
 typedef float vec2[2];
@@ -35,6 +36,7 @@ protected:
 	void establishTexture(/* ... parameters? ... */);
 	void establishView();
 	GLuint texID = 0;
+
 	// lighting environment
 	static float lightPos[4 * MAX_NUM_LIGHTS];		   // (x,y,z,w) for each light
 	static bool posInModelCoordinates[MAX_NUM_LIGHTS]; // pos is in MC or EC?
