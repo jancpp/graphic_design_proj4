@@ -46,11 +46,11 @@ vec4 evaluateLightingModel()
     vec3 liHat  = vec3(0.0, 0.0, 1.0);  // directional light in EC at eye (a flashlight)
     vec3 vHat   = vec3(0.0, 0.0, 1.0);  // unit towards the eye
     vec3 riHat  = vec3(0.0, 0.0, 0.0);
-    
+
     vec3 Ia     = ka * La;              // ambient reflection
     vec3 Id     = vec3(0.0, 0.0, 0.0);  // diffuse reflection
     vec3 Is     = vec3(0.0, 0.0, 0.0);  // specular reflection
-    
+
     if (ec_lds[3].w == 0) {
         vHat = normalize(-pvaIn.ecPosition);
     } else {
@@ -59,12 +59,12 @@ vec4 evaluateLightingModel()
         double dy = -ec_lds[2][1]/ec_lds[1][1];
         vHat = normalize(vec3(dx, dy, 1.0));
     }
-    
+
     vec3 nHat = pvaIn.ecUnitNormal;
     if (dot(vHat, nHat) < 0){
         nHat = -nHat;
     }
-    
+
     for (int i=0; i<actualNumLights; i++) {
         // 4D position/direction, Li, xyzw = (xi, yi, zi, wi):
         vec3 Li = vec3(p_ecLightPos[i].xyz);
@@ -78,24 +78,25 @@ vec4 evaluateLightingModel()
             af = atten(pvaIn.ecPosition, Li) ;
             liHat = normalize(Li - pvaIn.ecPosition);
         }
-        
+
         if (dot(liHat, nHat) > 0) {
             Id += af * lightStrength[i] * kd * dot(liHat,nHat);
-            
+
             riHat = normalize(reflect(-liHat, nHat));
-            
+
             if( dot(riHat, vHat) > 0)
             {
                 Is += af * lightStrength[i] * ks * pow(dot(riHat,vHat),m);
             }
         }
     }
-    return vec4(Ia + Id + Is, 1.0);
+    return vec4(Ia + Id + Is, alpha);
 }
 
 vec4 composeColor(vec4 lmColor, vec4 tColor)
 {
 	vec4 combinedColor = (tColor + 2 * lmColor) / 3;
+        //vec4 combinedColor = (tColor * lmColor);
 
 	return combinedColor;
 }
@@ -105,8 +106,8 @@ void main ()
 	vec4 color = evaluateLightingModel();
 	if (usingTextureMap == 1) {
 		vec4 textureColor = texture(textureMap, pvaIn.texCoords);
-		color = composeColor(color, textureColor);
-    } 
+		fragColor = composeColor(color, textureColor);
+    }
     else if (sceneHasTranslucentObjects == 1) {
         if (drawingOpaqueObjects == 1)
             if (color.a < 1.0)

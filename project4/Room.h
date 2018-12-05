@@ -47,8 +47,6 @@ private:
   GLuint vboRightWall[1];
   GLuint vboRug[1];
   GLuint vboCeiling[1];
-  GLuint texIDfloor = 0;
-  GLuint texIDrug = 0;
 
   void defineFloorGeometry(const char *floorTexImageSource, const float d);
   void defineRugGeometry(const char *rugTexImageSource, float rugWidthIn, float rugDepthIn);

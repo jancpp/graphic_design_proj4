@@ -41,7 +41,7 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 {
 
 
-    texIDfloor = readTextureImage(floorTexImageSource);
+    texID = readTextureImage(floorTexImageSource);
 
     vec3 *normals = new vec3[4];
     vec3 *mcPosition = new vec3[4];
@@ -212,13 +212,13 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         delete[] mcPosition;
     }
 
-    
+
 
     void Room::defineRugGeometry(const char *rugTexImageSource,
                                  float rugWidthIn, float rugDepthIn)
     {
 
-        texIDrug = readTextureImage(rugTexImageSource);
+        texID = readTextureImage(rugTexImageSource);
 
         vec3 *normals = new vec3[4];
         vec3 *mcPosition = new vec3[4];
@@ -404,7 +404,7 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), -1.0, 0.0, 0.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     }
-    
+
     void Room::renderRug()
     {
         establishMaterial(rmatl);
@@ -421,7 +421,7 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
     void Room::renderCeiling()
     {
         establishMaterial(cmatl);
-        
+
         glBindVertexArray(vao[4]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, -1.0);
