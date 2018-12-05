@@ -17,7 +17,7 @@
 
 typedef float vec2[2];
 typedef float vec3[3];
-const int NUM_PPA_ATTRIBUTES = 4;
+const int NUM_PPA_ATTRIBUTES = 3;
 
 class Room : public SceneElement
 {

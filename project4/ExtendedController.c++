@@ -46,7 +46,6 @@ void ExtendedController::handleDisplay()
     glfwGetFramebufferSize(theWindow, &width, &height);
     glViewport(0, 0, width, height);
     glClear(glClearFlags);
-    
     glDepthMask(GL_TRUE);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

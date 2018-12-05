@@ -124,13 +124,13 @@ void Table::renderTable()
     establishMaterial(tableMatl);
     for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 5; currentlyDrawingPiece++)
         if (piecesR[currentlyDrawingPiece] != nullptr)
-            piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    
+            piecesR[currentlyDrawingPiece]->renderShape(nullptr, nullptr);
+
     // 5. Establish any other attributes and make one or more calls to
     //    glDrawArrays and/or glDrawElements
     //    If all or part of this model involves texture mapping (project 4
     //    only), complete the implementation of SceneElement::establishTexture
     //    and call it from here as needed immediately before any glDrawArrays
     //    and/or glDrawElements calls to which texture is to be applied.
-    establishTexture();
+    // establishTexture();
 }

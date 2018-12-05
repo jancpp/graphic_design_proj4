@@ -112,7 +112,7 @@ void Ornaments::renderOrnaments()
     establishMaterial(matl);
     for (currentlyDrawingPiece = 0; currentlyDrawingPiece < NUM_PIECES; currentlyDrawingPiece++)
         if (piecesR[currentlyDrawingPiece] != nullptr)
-            piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
+            piecesR[currentlyDrawingPiece]->renderShape(nullptr, nullptr);
 
-    establishTexture();
+    // establishTexture();
 }

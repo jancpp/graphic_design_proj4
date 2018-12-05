@@ -23,7 +23,7 @@ Room::Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const 
     defineFloorGeometry(floorTexImageSource, d);
     defineBackWallGeometry();
     defineRightWallGeometry();
-    defineRugGeometry(rugTexImageSource, rugWidth, rugDepth);
+    // defineRugGeometry(rugTexImageSource, rugWidth, rugDepth);
     // defineCeilingGeometry();
 }
 
@@ -33,7 +33,7 @@ Room::~Room()
     glDeleteBuffers(1, vboRightWall);
     // glDeleteBuffers(1, vboCeiling);
     glDeleteBuffers(1, vboFloor);
-    glDeleteBuffers(1, vboRug);
+    // glDeleteBuffers(1, vboRug);
     glDeleteVertexArrays(NUM_PPA_ATTRIBUTES, vao);
 }
 
@@ -363,7 +363,7 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         renderFloor();
         renderBackWall();
         renderRightWall();
-        renderRug();
+        // renderRug();
         // renderCeiling();
 
         glUseProgram(pgm);

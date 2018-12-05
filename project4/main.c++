@@ -7,6 +7,7 @@
 #include "Table.h"
 #include "Couch.h"
 #include "Room.h"
+#include "Rug.h"
 #include "Lamp.h"
 #include "Light.h"
 #include "ECenter.h"
@@ -47,13 +48,19 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     const float floordIn = 35;
     const char *rugTexImageSource = "images/rug.jpg";
     // room
-
     Room *r1 = new Room(sIF, floorTexImageSource, floordIn, floorMatl,
-                       rugTexImageSource, rugMatl, rugWidth, rugDepth,
-                       ceilingMatl, wallMatl,
-                       p1,u1,
-                       roomWidth, roomHeight, roomDepth);
+                        rugTexImageSource, rugMatl, rugWidth, rugDepth,
+                        ceilingMatl, wallMatl,
+                        p1, u1,
+                        roomWidth, roomHeight, roomDepth);
     c.addModel(r1);
+    // rug
+
+    Rug *r2 = new Rug(sIF, rugTexImageSource, rugMatl,
+                      p1, u1,
+                      rugWidth, rugDepth,
+                      roomWidth, roomHeight, roomDepth);
+    // c.addModel(r2);
 
     // couch
     double couchHeight = 36.0, couchWidth = 100.0, couchDepth = 38.0;

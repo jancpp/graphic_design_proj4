@@ -114,12 +114,12 @@ void Lamp::renderLamp()
 {
     establishMaterial(poleMatl);
     if (piecesR[0] != nullptr)
-        piecesR[0]->renderShape(prepareForFace, this);
+        piecesR[0]->renderShape(nullptr, nullptr);
     if (piecesR[1] != nullptr)
-        piecesR[1]->renderShape(prepareForFace, this);
+        piecesR[1]->renderShape(nullptr, nullptr);
     establishMaterial(topMatl);
     if (piecesR[2] != nullptr)
-        piecesR[2]->renderShape(prepareForFace, this);
-    
-    establishTexture();
+        piecesR[2]->renderShape(nullptr, nullptr);
+
+    // establishTexture();
 }
