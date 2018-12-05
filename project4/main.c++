@@ -26,6 +26,21 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // room
     double roomHeight = 120.0, roomWidth = 240.0, roomDepth = 144.0;
     double rugWidth = 95.0, rugDepth = 60.0;
+    double endTableHeight = 25.0, endTableDepth = 25.0, endTableWidth = 23.0;
+    double couchHeight = 36.0, couchWidth = 100.0, couchDepth = 38.0;
+    double treeBaseRadius = 15, treeHeigth = 80;
+    double vaseHeight = 12, vaseTopRadius = 4.0, vaseBaseRadius = 2.5;
+    double lampHeight = 29.0, topRadius = 5.0, midRadius = 10.0;
+    double armChairHeight = 36.0, armChairWidth = 56.0, armChairDepth = 38.0;
+    double ecHeight = 30.0, ecWidth = 60.0, ecDepth = 28.0;
+    double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
+    double lightHeigth = 8.0, lightRadius = 12.0;
+    double tableHeight = 18.0, tableDepth = 28.0, tableWidth = 48.0;
+    double poleHeight = 18.0, poleRadius = 1.5, baseRadius = 6.0;
+
+    const char *floorTexImageSource = "images/wood.jpg";
+    const float floordIn = 35;
+    const char *rugTexImageSource = "images/rug.jpg";
     cryph::AffPoint p1(0.0, 0.0, 0.0);
     cryph::AffPoint midRoom(roomWidth / 2, roomDepth / 2, 0.0);
     // floor
@@ -39,14 +54,12 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // ceiling
     PhongMaterial ceilingMatl(0.99, 0.99, 0.99,
                               0.75, 0.6, 0.01,
-                              1.0, 1.0);
+                              1.0, 0.35);
     // walls
     PhongMaterial wallMatl(0.85, 0.95, 0.85,
                            0.75, 0.5, 0.01,
                            5.0, 1.0);
-    const char *floorTexImageSource = "images/wood.jpg";
-    const float floordIn = 35;
-    const char *rugTexImageSource = "images/rug.jpg";
+    
     // room
     Room *r1 = new Room(sIF, floorTexImageSource, floordIn, floorMatl,
                         rugTexImageSource, rugMatl, rugWidth, rugDepth,
@@ -54,8 +67,19 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         p1, u1,
                         roomWidth, roomHeight, roomDepth);
     c.addModel(r1);
-    // rug
+    // vase
+    cryph::AffPoint p17(midRoom.x + (tableWidth - endTableWidth) / 2,
+                        midRoom.y - tableDepth / 2,
+                        midRoom.z + tableHeight);
+    PhongMaterial vaseMatl(0.7, 0.9, 1.95,
+                           0.5, 0.5, 0.1,
+                           10.0, 0.4);
+    Vase *vs1 = new Vase(sIF, vaseMatl,
+                         p17, u1,
+                         vaseHeight, vaseTopRadius, vaseBaseRadius);
+    c.addModel(vs1);
 
+    // rug
     Rug *r2 = new Rug(sIF, rugTexImageSource, rugMatl,
                       p1, u1,
                       rugWidth, rugDepth,
@@ -63,7 +87,6 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // c.addModel(r2);
 
     // couch
-    double couchHeight = 36.0, couchWidth = 100.0, couchDepth = 38.0;
     cryph::AffPoint p2(midRoom.x - couchWidth / 2, roomDepth, 0.0);
     PhongMaterial couchMatl(0.75, 0.0, 0.0,
                             0.35, 0.2, 0.1,
@@ -73,14 +96,12 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // c.addModel(c1);
 
     // arm chair
-    double armChairHeight = 36.0, armChairWidth = 56.0, armChairDepth = 38.0;
     cryph::AffPoint p22(0.01, (roomDepth - armChairWidth) / 2, 0.0);
     Couch *c2 = new Couch(sIF, couchMatl, p22, v1,
                           4.0, 3.0, 5.0, armChairWidth, armChairHeight, armChairDepth);
     // c.addModel(c2);
 
     // left end table
-    double endTableHeight = 25.0, endTableDepth = 25.0, endTableWidth = 23.0;
     cryph::AffPoint p3(p2.x - endTableWidth - 2.0, roomDepth, 0.0);
     PhongMaterial tableMatl(0.75, 0.0, 0.0,
                             0.35, 0.4, 0.1,
@@ -96,18 +117,14 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // c.addModel(t2);
 
     // table
-    double tableHeight = 18.0, tableDepth = 28.0, tableWidth = 48.0;
     cryph::AffPoint p5(midRoom.x - tableWidth / 2,
                        midRoom.y + tableDepth / 2,
                        0.0);
     Table *t3 = new Table(sIF, tableMatl, p5, u1,
                           4.5, 2.0, tableWidth, tableHeight, tableDepth);
-    // c.addModel(t3);
+    c.addModel(t3);
 
     // lamps
-    double lampHeight = 29.0, topRadius = 5.0, midRadius = 10.0,
-    poleHeight = 18.0, poleRadius = 1.5,
-    baseRadius = 6.0;
     PhongMaterial topMatl(0.99, 0.99, 0.99,
                           0.95, 0.8, 0.1,
                           2.0, 1.0);
@@ -143,25 +160,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         baseRadius);
     // c.addModel(l2);
 
-    // vase
-    cryph::AffPoint p17(p4.x + endTableWidth / 2,
-                       p4.y - endTableDepth / 2,
-                       p4.z + endTableHeight);
-    PhongMaterial vaseMatl(0.1, 0.0, 1.0,
-                           0.5, 0.2, 0.1,
-                           10.0, 0.4);
-    double vaseHeight = 5;
-    double vaseTopRadius = 2.5;
-    double vaseBaseRadius = 2.0;
-    Vase *vs1 = new Vase(sIF, vaseMatl, poleMatl, bulbMatl, p17, u1,
-                         lampHeight,
-                         topRadius, midRadius,
-                         poleHeight, poleRadius,
-                         baseRadius);
-    c.addModel(vs1);
-
     // entertainment center
-    double ecHeight = 30.0, ecWidth = 60.0, ecDepth = 28.0;
     cryph::AffPoint p8(roomWidth, midRoom.y + ecWidth / 2, 0.01);
     PhongMaterial ecMatl(0.75, 0.0, 0.0,
                          0.5, 0.2, 0.1,
@@ -170,7 +169,6 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     c.addModel(ec1);
 
     // TV set
-    double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
     cryph::AffPoint p9(roomWidth - ecDepth/2, midRoom.y + tvWidth / 2, ecHeight);
     const char *tvTexImageSource = "images/mahomes.png";
     PhongMaterial tvMatl(0.1, 0.1, 0.1,
@@ -180,7 +178,6 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // c.addModel(tv1);
 
     // light
-    double heigth = 8.0, radius = 12.0;
     PhongMaterial topCeilingMatl(0.75, 0.0, 0.0,
                                  0.95, 0.2, 0.1,
                                  2.0, 1.0);
@@ -191,7 +188,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     cryph::AffPoint p10(midRoom.x, midRoom.y, roomHeight);
     Light *l3 = new Light(sIF, poleMatl, bottomMatl,
                           p10, u1,
-                          heigth, radius);
+                          lightHeigth, lightRadius);
     // // c.addModel(l3);
 
     //tree
@@ -208,8 +205,6 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     // cryph::AffPoint p12(p1.x + roomWidth - 20, p1.y + roomDepth - 20, 0.01);
     cryph::AffPoint p11(p1.x + roomWidth - 20, p1.y + 20, 14.0);
     cryph::AffPoint p12(p1.x + roomWidth - 20, p1.y + 20, 0.01);
-    double treeBaseRadius = 15;
-    double treeHeigth = 80;
     topRadius = 12;
     midRadius = 16;
     baseRadius = 20;
@@ -326,3 +321,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+

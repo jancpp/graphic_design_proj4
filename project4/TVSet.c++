@@ -106,6 +106,7 @@ void TVSet::render()
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
 
+    glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
     establishView();
     establishLightingEnvironment();
     renderTVSet();

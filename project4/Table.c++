@@ -97,22 +97,16 @@ void Table::prepareForFace(void *caller, int faceIndex)
 
 void Table::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
     
-    // 2. Establish "mc_ec" and "ec_lds" matrices
     establishView();
-    
-    // 3. Establish Lighting environment
-    //    complete the implementation of SceneElement::establishLightingEnvironment
-    //    and then call it here.
     establishLightingEnvironment();
-    
+    glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
+
     renderTable();
     
-    // 6. Reestablish previous shader program
     glUseProgram(pgm);
 }
 

@@ -18,11 +18,10 @@
 class Vase : public SceneElement
 {
 public:
-  Vase(ShaderIF *sIF, PhongMaterial &topMatlIn, PhongMaterial &poleMatlIn, PhongMaterial &bulbMatlIn,
+  Vase(ShaderIF *sIF, PhongMaterial &vaseMatlIn,
        cryph::AffPoint corner, cryph::AffVector u,
        double VaseHeigth,
-       double topRadius, double midRadius,
-       double poleHeight, double poleRadius,
+       double topRadius,
        double baseRadius);
   virtual ~Vase();
 
@@ -31,15 +30,17 @@ public:
   void renderVase();
 
 private:
-  BasicShape *pieces[3];
-  BasicShapeRenderer *piecesR[3];
+  static const int NUM_PIECES = 1;
+  BasicShape *pieces[NUM_PIECES];
+  BasicShapeRenderer *piecesR[NUM_PIECES];
   int currentlyDrawingPiece; // used only in context of "prepareForFace"
-  PhongMaterial topMatl, poleMatl, bulbMatl;
+  PhongMaterial vaseMatl;
   double xyz[6];
 
   void defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-                             double legHeight, double legRadius, double armRadius,
-                             double VaseWidth, double VaseHeight, double VaseDepth);
+                             double VaseHeigth,
+                             double topRadius,
+                             double baseRadius);
 
   static void prepareForFace(void *caller, int faceIndex);
 };
