@@ -384,9 +384,9 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
     void Room::renderBackWall()
     {
 
-        wmatl.alpha = 0.5;
+        // wmatl.alpha = 0.5;
         establishMaterial(wmatl);
-        glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
+        // glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
 
         glBindVertexArray(vao[1]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
@@ -397,7 +397,9 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 
     void Room::renderRightWall()
     {
+        wmatl.alpha = 1.0;
         establishMaterial(wmatl);
+        glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 0);
 
         glBindVertexArray(vao[2]);
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));

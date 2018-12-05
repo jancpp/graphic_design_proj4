@@ -13,6 +13,7 @@
 #include "TVSet.h"
 #include "Ornaments.h"
 #include "Tree.h"
+#include "Vase.h"
 
 void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, ShaderIF *sIFwGeoM)
 {
@@ -52,7 +53,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                        ceilingMatl, wallMatl,
                        p1,u1,
                        roomWidth, roomHeight, roomDepth);
-    // c.addModel(r1);
+    c.addModel(r1);
 
     // couch
     double couchHeight = 36.0, couchWidth = 100.0, couchDepth = 38.0;
@@ -135,6 +136,23 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         baseRadius);
     // c.addModel(l2);
 
+    // vase
+    cryph::AffPoint p17(p4.x + endTableWidth / 2,
+                       p4.y - endTableDepth / 2,
+                       p4.z + endTableHeight);
+    PhongMaterial vaseMatl(0.1, 0.0, 1.0,
+                           0.5, 0.2, 0.1,
+                           10.0, 0.4);
+    double vaseHeight = 5;
+    double vaseTopRadius = 2.5;
+    double vaseBaseRadius = 2.0;
+    Vase *vs1 = new Vase(sIF, vaseMatl, poleMatl, bulbMatl, p17, u1,
+                         lampHeight,
+                         topRadius, midRadius,
+                         poleHeight, poleRadius,
+                         baseRadius);
+    c.addModel(vs1);
+
     // entertainment center
     double ecHeight = 30.0, ecWidth = 60.0, ecDepth = 28.0;
     cryph::AffPoint p8(roomWidth, midRoom.y + ecWidth / 2, 0.01);
@@ -142,7 +160,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                          0.5, 0.2, 0.1,
                          10.0, 1.0);
     ECenter *ec1 = new ECenter(sIF, ecMatl, p8, -v1, ecWidth, ecHeight, ecDepth);
-    // c.addModel(ec1);
+    c.addModel(ec1);
 
     // TV set
     double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
@@ -152,7 +170,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                          0.5, 0.8, 0.3,
                          40.0, 1.0);
     TVSet *tv1 = new TVSet(sIF, tvTexImageSource, tvMatl, p9, -v1, tvWidth, tvHeight, tvDepth);
-    c.addModel(tv1);
+    // c.addModel(tv1);
 
     // light
     double heigth = 8.0, radius = 12.0;
@@ -200,6 +218,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                                    30, 1.0,
                                    topRadius);
     // c.addModel(xmasTreeStand);
+
     Ornaments *xmasOrnamentsYellow = new Ornaments(sIFwGeoM, yOrnMatl,
                                                    p11, u1,
                                                    treeHeigth, topRadius, midRadius, baseRadius, 2);

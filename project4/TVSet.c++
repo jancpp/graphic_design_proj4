@@ -85,6 +85,9 @@ void TVSet::getMCBoundingBox(double *xyzLimits) const
 
 void TVSet::prepareForFace(void *caller, int faceIndex)
 {
+    // check if texure is active
+    // std::cout << "caller: " << caller << ", faceIndex: " << faceIndex << "\n";
+
     if (caller != nullptr) {
         TVSet *tv = reinterpret_cast<TVSet*>(caller);
         if (faceIndex == 5) {

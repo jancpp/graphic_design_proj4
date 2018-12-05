@@ -91,6 +91,7 @@ void ECenter::getMCBoundingBox(double* xyzLimits) const
 
 void ECenter::prepareForFace(void *caller, int faceIndex)
 {
+    
 }
 
 void ECenter::render()
@@ -123,23 +124,18 @@ void ECenter::renderECenter()
     // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 5; currentlyDrawingPiece++)
     //     if (piecesR[currentlyDrawingPiece] != nullptr)
     //         piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    
+
     establishMaterial(ecmatl);
     if (piecesR[0] != nullptr)
-        piecesR[0]->renderShape(prepareForFace, this);
+        piecesR[0]->renderShape(nullptr, nullptr);
     if (piecesR[1] != nullptr)
-        piecesR[1]->renderShape(prepareForFace, this);
+        piecesR[1]->renderShape(nullptr, nullptr);
     if (piecesR[2] != nullptr)
-        piecesR[2]->renderShape(prepareForFace, this);
-    ecmatl.alpha = 0.5;
-    establishMaterial(ecmatl);
-    glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
-
+        piecesR[2]->renderShape(nullptr, nullptr);
     if (piecesR[3] != nullptr)
-        piecesR[3]->renderShape(prepareForFace, this);
+        piecesR[3]->renderShape(nullptr, nullptr);
     if (piecesR[4] != nullptr)
-        piecesR[4]->renderShape(prepareForFace, this);
-    ecmatl.alpha = 1.0;
+        piecesR[4]->renderShape(nullptr, nullptr);
 
     // 5. Establish any other attributes and make one or more calls to
     //    glDrawArrays and/or glDrawElements
