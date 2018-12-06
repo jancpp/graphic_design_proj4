@@ -63,7 +63,7 @@ void Vase::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
      // top part / cone
     const cryph::AffVector sZero = cryph::AffVector::xu;
     pieces[0] = BasicShape::makeBoundedCone(bottom, bottom + ww * VaseHeigth,
-                                            baseRadius, topRadius, 20, 20, BasicShape::CAP_AT_NEITHER);
+                                            baseRadius, topRadius, 20, 20, BasicShape::CAP_AT_BOTTOM);
 }
 
 void Vase::getMCBoundingBox(double *xyzLimits) const
@@ -83,11 +83,9 @@ void Vase::render()
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
     
-    glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
     establishView();
     establishLightingEnvironment();
     renderVase();
-   
     glUseProgram(pgm);
 }
 

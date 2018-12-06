@@ -129,4 +129,5 @@ void Rug::renderRug()
     //    and call it from here as needed immediately before any glDrawArrays
     //    and/or glDrawElements calls to which texture is to be applied.
     establishTexture();
+    glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
 }

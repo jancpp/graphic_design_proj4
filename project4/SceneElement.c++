@@ -22,12 +22,12 @@ float posToGLSL[4*MAX_NUM_LIGHTS];
 
 float SceneElement::lightStrength[3*MAX_NUM_LIGHTS] =
 {
-    0.8, 0.8, 0.8,
+    0.5, 0.5, 0.5,
     0.6, 0.6, 0.6,
     0.6, 0.6, 0.6
 };
 
-float SceneElement::globalAmbient[] = { 0.5, 0.5, 0.5 };
+float SceneElement::globalAmbient[] = { 0.6, 0.6, 0.6 };
 
 SceneElement::SceneElement(ShaderIF *sIF) : shaderIF(sIF), texID(0)
 {

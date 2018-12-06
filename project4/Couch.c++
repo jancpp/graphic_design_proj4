@@ -146,19 +146,8 @@ void Couch::render()
 
 void Couch::renderCouch()
 {
-    // 4. Establish material property parameters.
-    //    complete the implementation of SceneElement::establishMaterial
-    //    and then call it here.
     establishMaterial(couchMatl);
     for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 10; currentlyDrawingPiece++)
         if (piecesR[currentlyDrawingPiece] != nullptr)
             piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    
-    // 5. Establish any other attributes and make one or more calls to
-    //    glDrawArrays and/or glDrawElements
-    //    If all or part of this model involves texture mapping (project 4
-    //    only), complete the implementation of SceneElement::establishTexture
-    //    and call it from here as needed immediately before any glDrawArrays
-    //    and/or glDrawElements calls to which texture is to be applied.
-    establishTexture();
 }

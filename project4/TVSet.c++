@@ -91,6 +91,8 @@ void TVSet::prepareForFace(void *caller, int faceIndex)
     if (caller != nullptr) {
         TVSet *tv = reinterpret_cast<TVSet*>(caller);
         if (faceIndex == 5) {
+            PhongMaterial screenMatl(1.0, 1.0, 1.0, 0.5, 0.1, 0.5, 2.0, 1.0);
+            tv->establishMaterial(screenMatl); // ligth
             tv->piecesR[0]->setTexCoordsForBlock(faceIndex);
             tv->establishTexture();
         } else {
@@ -115,9 +117,13 @@ void TVSet::render()
 
 void TVSet::renderTVSet()
 {
+
     establishMaterial(tvMatl); // black
-    if (piecesR[0] != nullptr)
+
+    if (piecesR[0] != nullptr) 
         piecesR[0]->renderShape(prepareForFace, this);
+    glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
+    establishMaterial(tvMatl); // black
     if (piecesR[1] != nullptr)
         piecesR[1]->renderShape(nullptr, nullptr);
     if (piecesR[2] != nullptr)

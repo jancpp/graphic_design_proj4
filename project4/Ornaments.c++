@@ -113,6 +113,4 @@ void Ornaments::renderOrnaments()
     for (currentlyDrawingPiece = 0; currentlyDrawingPiece < NUM_PIECES; currentlyDrawingPiece++)
         if (piecesR[currentlyDrawingPiece] != nullptr)
             piecesR[currentlyDrawingPiece]->renderShape(nullptr, nullptr);
-
-    // establishTexture();
 }

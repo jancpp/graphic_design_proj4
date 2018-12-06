@@ -34,7 +34,6 @@ public:
   void renderFloor();
   void renderBackWall();
   void renderRightWall();
-  void renderRug();
   void renderCeiling();
 
 private:
@@ -45,11 +44,9 @@ private:
   GLuint vboFloor[1];
   GLuint vboBackWall[1];
   GLuint vboRightWall[1];
-  GLuint vboRug[1];
   GLuint vboCeiling[1];
 
   void defineFloorGeometry(const char *floorTexImageSource, const float d);
-  void defineRugGeometry(const char *rugTexImageSource, float rugWidthIn, float rugDepthIn);
   void defineBackWallGeometry();
   void defineRightWallGeometry();
   void defineCeilingGeometry();

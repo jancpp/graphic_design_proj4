@@ -120,6 +120,4 @@ void Lamp::renderLamp()
     establishMaterial(topMatl);
     if (piecesR[2] != nullptr)
         piecesR[2]->renderShape(nullptr, nullptr);
-
-    // establishTexture();
 }

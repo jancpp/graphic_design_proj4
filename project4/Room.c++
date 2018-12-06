@@ -20,11 +20,12 @@ Room::Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const 
     zmax = corner.z + height;
 
     glGenVertexArrays(NUM_PPA_ATTRIBUTES, vao);
+    defineCeilingGeometry();
+
     defineFloorGeometry(floorTexImageSource, d);
     defineBackWallGeometry();
     defineRightWallGeometry();
     // defineRugGeometry(rugTexImageSource, rugWidth, rugDepth);
-    defineCeilingGeometry();
 }
 
 Room::~Room()
@@ -278,19 +279,17 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         GLint pgm;
         glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
         glUseProgram(shaderIF->getShaderPgmID());
-
+        // glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
         establishLightingEnvironment();
         establishView();
 
-        glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
-        
+
+        // renderCeiling();
 
         renderFloor();
         renderBackWall();
         renderRightWall();
 
-        glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
-        renderCeiling();
         glUseProgram(pgm);
     }
 
@@ -300,6 +299,8 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
         establishTexture();
 
         glBindVertexArray(vao[0]);
+        // glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
+
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, 1.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
         // TURN OFF your "using a texture map" uniform variable before leaving.
@@ -308,10 +309,12 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 
     void Room::renderBackWall()
     {
+        // glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
+
         establishMaterial(wmatl);
-        // glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
 
         glBindVertexArray(vao[1]);
+
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, -1.0, 0.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -319,10 +322,12 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 
     void Room::renderRightWall()
     {
-        establishMaterial(wmatl);
         // glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
+        establishMaterial(wmatl);
+        
 
         glBindVertexArray(vao[2]);
+
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), -1.0, 0.0, 0.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
@@ -330,11 +335,11 @@ void Room::defineFloorGeometry(const char *floorTexImageSource, const float d)
 
     void Room::renderCeiling()
     {
-        cmatl.alpha = 0.5;
-            establishMaterial(cmatl);
-        glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
+        // glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
 
+        establishMaterial(cmatl);
         glBindVertexArray(vao[3]);
+
         glDisableVertexAttribArray(shaderIF->pvaLoc("mcNormal"));
         glVertexAttrib3f(shaderIF->pvaLoc("mcNormal"), 0.0, 0.0, -1.0);
         glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
