@@ -27,7 +27,7 @@ float SceneElement::lightStrength[3*MAX_NUM_LIGHTS] =
     0.6, 0.6, 0.6
 };
 
-float SceneElement::globalAmbient[] = { 0.6, 0.6, 0.6 };
+float SceneElement::globalAmbient[] = { 0.7, 0.7, 0.7 };
 
 SceneElement::SceneElement(ShaderIF *sIF) : shaderIF(sIF), texID(0)
 {
@@ -66,7 +66,7 @@ void SceneElement::establishLightingEnvironment()
             posToGLSL[4*i + 2] = inEC[2];
         }
     }
-    
+
     glUniform1i(shaderIF->ppuLoc("actualNumLights"), actualNumLights);
     glUniform4fv(shaderIF->ppuLoc("p_ecLightPos"), actualNumLights, posToGLSL);
     glUniform3fv(shaderIF->ppuLoc("lightStrength"), actualNumLights, lightStrength);
@@ -89,20 +89,9 @@ void SceneElement::establishMaterial(const PhongMaterial &matl)
 //       mentioned in the comments that follow.
 void SceneElement::establishTexture( /* ... parameters? ... */ )
 {
-    // Set texture-related parameters:
-    // 1. OpenGL ones including glActiveTexture, glBindTexture, glTexParameter*
-    // 2. Parameters communicated via per-primitive uniform variables defined in
-    //    your shader program that allow you to control whether a texture is to
-    //    to be used, and, if so, where the texture comes from (e.g., procedural,
-    //    a sampler2D, etc.) and how to combine its color with with the color
-    //    computed by your Phong local lighting model color.
-    //
-    // (If you are texture-mapping onto faces of BasicShape instances,
-    // see that documentation for specific additional details.)
      glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 1);
      glUniform1i(shaderIF->ppuLoc("textureMap"), 0);
      glActiveTexture(GL_TEXTURE0);
-    //  std::cout << texID << "\n\n";
      glBindTexture(GL_TEXTURE_2D, texID);
 }
 

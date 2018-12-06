@@ -95,8 +95,8 @@ vec4 evaluateLightingModel()
 
 vec4 composeColor(vec4 lmColor, vec4 tColor)
 {
-	vec4 combinedColor = (tColor + 2 * lmColor) / 3;
-        //vec4 combinedColor = (tColor * lmColor);
+	//vec4 combinedColor = (tColor + 2 * lmColor) / 3;
+        vec4 combinedColor = (tColor * lmColor);
 
 	return combinedColor;
 }

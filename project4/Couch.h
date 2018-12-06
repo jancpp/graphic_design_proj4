@@ -29,7 +29,7 @@ public:
   void renderCouch();
 
 private:
-	BasicShape* pieces[10]; 
+	BasicShape* pieces[10];
 	BasicShapeRenderer* piecesR[10];
 	int currentlyDrawingPiece; // used only in context of "prepareForFace"
 	PhongMaterial couchMatl;

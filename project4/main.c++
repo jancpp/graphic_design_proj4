@@ -41,7 +41,8 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
     double lightHeigth = 8.0, lightRadius = 12.0;
     double tableHeight = 18.0, tableDepth = 28.0, tableWidth = 48.0;
-    double presentHeight = 9.0, presentDepth = 11.0, presentWidth = 20.0;
+    double presentHeight1 = 2.0, presentDepth1 = 11.0, presentWidth1 = 20.0;
+    double presentHeight2 = 6.0, presentDepth2 = 18.0, presentWidth2 = 10.0;
     double poleHeight = 18.0, poleRadius = 1.5, baseRadius = 6.0;
     double flowerHeight = 18, flowerTopRadius = 3.5, flowerBaseRadius = 0.3;
     double stemHeight = 18, stemTopRadius = 0.2, stemBaseRadius = 0.3;
@@ -49,6 +50,8 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     const char *floorTexImageSource = "images/wood.jpg";
     const float floordIn = 35;
     const char *rugTexImageSource = "images/rug.jpg";
+    const char *presentTexImageSource1 = "images/wrap_paper1.jpg";
+    const char *presentTexImageSource2 = "images/wrap_paper2.jpg";
     cryph::AffPoint p1(0.0, 0.0, 0.0);
     cryph::AffPoint midRoom(roomWidth / 2, roomDepth / 2, 0.0);
     PhongMaterial floorMatl(0.5, 0.3, 0.15, // r, g, b
@@ -121,7 +124,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     cryph::AffPoint p17(midRoom.x,
                         midRoom.y ,
                         midRoom.z + tableHeight);
-    
+
     Vase *vs1 = new Vase(sIF, vaseMatl,
                          p17, u1,
                          vaseHeight, vaseTopRadius, vaseBaseRadius);
@@ -151,7 +154,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
 
     // couch
     cryph::AffPoint p2(midRoom.x - couchWidth / 2, roomDepth, 0.0);
-    
+
     Couch *c1 = new Couch(sIF, couchMatl, p2, u1,
                           4.0, 3.0, 5.0, couchWidth, couchHeight, couchDepth);
     c.addModel(c1);
@@ -164,7 +167,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
 
     // left end table
     cryph::AffPoint p3(p2.x - endTableWidth - 2.0, roomDepth, 0.0);
-    
+
     Table *t1 = new Table(sIF, tableMatl, p3, u1,
                           4.5, 2.0, endTableWidth, endTableHeight, endTableDepth);
     c.addModel(t1);
@@ -209,19 +212,19 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
 
     // entertainment center
     cryph::AffPoint p8(roomWidth, midRoom.y + ecWidth / 2, 0.01);
-    
+
     ECenter *ec1 = new ECenter(sIF, ecMatl, p8, -v1, ecWidth, ecHeight, ecDepth);
     c.addModel(ec1);
 
     // TV set
     cryph::AffPoint p9(roomWidth - ecDepth/2, midRoom.y + tvWidth / 2, ecHeight);
     const char *tvTexImageSource = "images/mahomes.png";
-   
+
     TVSet *tv1 = new TVSet(sIF, tvTexImageSource, tvMatl, p9, -v1, tvWidth, tvHeight, tvDepth);
     c.addModel(tv1);
 
     // light
-    
+
 
     cryph::AffPoint p10(midRoom.x, midRoom.y, roomHeight);
     Light *l3 = new Light(sIF, poleMatl, bottomMatl,
@@ -257,11 +260,18 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                                                    treeHeigth, topRadius, midRadius, baseRadius, 4);
     c.addModel(xmasOrnamentsRed);
     // presents
-    cryph::AffPoint p13(p12.x - treeBaseRadius*2, p12.y, 0.01);
-    Present *pr1 = new Present(sIF, rugTexImageSource, whiteMatl,
+    cryph::AffPoint p13(p12.x - treeBaseRadius*2, p12.y + treeBaseRadius/2, 0.01);
+    cryph::AffPoint p14(p13.x-5, p13.y - 12, 0.01);
+
+    Present *pr1 = new Present(sIF, presentTexImageSource2, whiteMatl,
                               p13, u2,
-                              presentWidth, presentHeight, presentDepth);
+                              presentWidth1, presentHeight1, presentDepth1);
     c.addModel(pr1);
+
+    Present *pr2 = new Present(sIF, presentTexImageSource1, whiteMatl,
+                              p14, u2,
+                              presentWidth2, presentHeight2, presentDepth2);
+    c.addModel(pr2);
 }
 
 void set3DViewingInformation(double overallBB[])
@@ -347,4 +357,3 @@ int main(int argc, char* argv[])
 
     return 0;
 }
-

@@ -1,18 +1,18 @@
-// Present.c++
+// present.c++
 
 #include "Present.h"
 
-Present::Present(ShaderIF *sIF, const char *presentTexImageSource, const PhongMaterial &rmatlIn,
-                 cryph::AffPoint corner, cryph::AffVector u,
-                 double presentWidth, double presentHeight, double presentDepth) : SceneElement(sIF), rmatl(rmatlIn)
+Present::Present(ShaderIF *sIF, const char *presentTexImageSource, PhongMaterial &pMatlIn,
+              cryph::AffPoint corner, cryph::AffVector u,
+              double presentWidth, double presentHeight, double presentDepth)
+: SceneElement(sIF), pMatl(pMatlIn)
 {
     defineInitialGeometry(corner, u,
                           presentWidth, presentHeight, presentDepth);
     texID = readTextureImage(presentTexImageSource);
-    
     xyz[0] = 1.0;
     xyz[1] = 0.0;
-    for (int i=0 ; i<1 ; i++)
+    for (int i = 0; i < 1; i++)
         if (pieces[i] == nullptr)
             piecesR[i] = nullptr;
         else
@@ -25,12 +25,12 @@ Present::Present(ShaderIF *sIF, const char *presentTexImageSource, const PhongMa
             {
                 double thisxyz[6];
                 pieces[i]->getMCBoundingBox(thisxyz);
-                for (int j=0 ; j<3 ; j++)
+                for (int j = 0; j < 3; j++)
                 {
-                    if (thisxyz[2*j] < xyz[2*j])
-                        xyz[2*j] = thisxyz[2*j];
-                    if (thisxyz[2*j+1] > xyz[2*j+1])
-                        xyz[2*j+1] = thisxyz[2*j+1];
+                    if (thisxyz[2 * j] < xyz[2 * j])
+                        xyz[2 * j] = thisxyz[2 * j];
+                    if (thisxyz[2 * j + 1] > xyz[2 * j + 1])
+                        xyz[2 * j + 1] = thisxyz[2 * j + 1];
                 }
             }
         }
@@ -38,7 +38,7 @@ Present::Present(ShaderIF *sIF, const char *presentTexImageSource, const PhongMa
 
 Present::~Present()
 {
-    for (int i=0 ; i<1 ; i++)
+    for (int i = 0; i < 1; i++)
     {
         if (pieces[i] != nullptr)
             delete pieces[i];
@@ -48,44 +48,38 @@ Present::~Present()
 }
 
 void Present::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-                                    double presentWidth, double presentHeigth, double presentDepth)
+                                  double presentWidth, double presentHeight, double presentDepth)
 {
-    
+    // we assume the present is parallel to xy-plane, hence:
     cryph::AffVector uu(u[0], u[1], 0.0);
+    cryph::AffVector ww(0, 0, 1);
     uu.normalize();
-    cryph::AffVector vv(0, 1, 0);
-    cryph::AffVector ww = vv.cross(uu);
-    
-    
-    // Present
+    cryph::AffVector vv = ww.cross(uu);
+    corner = corner + ww * 0.01 + vv * 0.01; // to avoid bleading in to wall and floor
+
     pieces[0] = BasicShape::makeBlock(corner,
                                       uu, presentWidth,
-                                      vv, presentDepth,
-                                      ww, presentHeigth);
+                                      ww, presentHeight,
+                                      vv, presentDepth);
+
 }
 
-// xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
-void Present::getMCBoundingBox(double* xyzLimits) const
+void Present::getMCBoundingBox(double *xyzLimits) const
 {
-    for (int i=0 ; i<6 ; i++)
+    for (int i = 0; i < 6; i++)
         xyzLimits[i] = xyz[i];
 }
 
 void Present::prepareForFace(void *caller, int faceIndex)
 {
-    if (caller != nullptr)
-    {
-        Present *p = reinterpret_cast<Present *>(caller);
-        if (faceIndex == 5)
+        if (caller != nullptr)
         {
-            p->piecesR[0]->setTexCoordsForBlock(faceIndex);
-            p->establishTexture();
+            Present *p = reinterpret_cast<Present *>(caller);
+            
+                p->piecesR[0]->setTexCoordsForBlock(faceIndex);
+                p->establishTexture();
+
         }
-        else
-        {
-            glUniform1i(p->shaderIF->ppuLoc("usingTextureMap"), 0);
-        }
-    }
 }
 
 void Present::render()
@@ -95,34 +89,24 @@ void Present::render()
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
 
-    glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
+    // 2. Establish "mc_ec" and "ec_lds" matrices
     establishView();
+
+    // 3. Establish Lighting environment
+    //    complete the implementation of SceneElement::establishLightingEnvironment
+    //    and then call it here.
     establishLightingEnvironment();
-    
+
     renderPresent();
-    
+
     // 6. Reestablish previous shader program
     glUseProgram(pgm);
 }
 
 void Present::renderPresent()
 {
-    // 3. Establish material property parameters.
-    //    complete the implementation of SceneElement::establishMaterial
-    //    and then call it here.
-    // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 4; currentlyDrawingPiece++)
-    // 	if (piecesR[currentlyDrawingPiece] != nullptr)
-    // 		piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-    establishMaterial(rmatl); // walls
-    if (piecesR[0] != nullptr)
-        piecesR[0]->renderShape(prepareForFace, this);
-
-        // 4. Establish any other attributes and make one or more calls to
-    //    glDrawArrays and/or glDrawElements
-    //    If all or part of this model involves texture mapping (project 3
-    //    only), complete the implementation of SceneElement::establishTexture
-    //    and call it from here as needed immediately before any glDrawArrays
-    //    and/or glDrawElements calls to which texture is to be applied.
-    establishTexture();
-    glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
+    establishMaterial(pMatl);
+    for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 1; currentlyDrawingPiece++)
+        if (piecesR[currentlyDrawingPiece] != nullptr)
+            piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
 }
