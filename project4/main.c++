@@ -14,6 +14,7 @@
 #include "TVSet.h"
 #include "Ornaments.h"
 #include "Tree.h"
+#include "Present.h"
 #include "Flower.h"
 #include "Stem.h"
 #include "Vase.h"
@@ -40,6 +41,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     double tvHeight = 28.0, tvWidth = 40.0, tvDepth = 2.0;
     double lightHeigth = 8.0, lightRadius = 12.0;
     double tableHeight = 18.0, tableDepth = 28.0, tableWidth = 48.0;
+    double presentHeight = 9.0, presentDepth = 11.0, presentWidth = 20.0;
     double poleHeight = 18.0, poleRadius = 1.5, baseRadius = 6.0;
     double flowerHeight = 18, flowerTopRadius = 3.5, flowerBaseRadius = 0.3;
     double stemHeight = 18, stemTopRadius = 0.2, stemBaseRadius = 0.3;
@@ -74,6 +76,9 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                              0.6, 0.6, 0.6,
                              80.0, 1.0);
     PhongMaterial redMatl(1.0, 0.0, 0.0,
+                          0.6, 0.6, 0.6,
+                          80.0, 1.0);
+    PhongMaterial whiteMatl(1.0, 1.0, 1.0,
                           0.6, 0.6, 0.6,
                           80.0, 1.0);
     PhongMaterial blueMatl(0.0, 0.0, 1.0,
@@ -224,7 +229,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                           lightHeigth, lightRadius);
     // c.addModel(l3);
 
-    //tree
+    // christmas tree
     cryph::AffPoint p11(p1.x + roomWidth - 20, p1.y + 20, 14.0);
     cryph::AffPoint p12(p1.x + roomWidth - 20, p1.y + 20, 0.01);
     topRadius = 12;
@@ -251,6 +256,12 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                                                    p11, u1,
                                                    treeHeigth, topRadius, midRadius, baseRadius, 4);
     c.addModel(xmasOrnamentsRed);
+    // presents
+    cryph::AffPoint p13(p12.x - treeBaseRadius*2, p12.y, 0.01);
+    Present *pr1 = new Present(sIF, rugTexImageSource, whiteMatl,
+                              p13, u2,
+                              presentWidth, presentHeight, presentDepth);
+    c.addModel(pr1);
 }
 
 void set3DViewingInformation(double overallBB[])

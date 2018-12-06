@@ -7,7 +7,7 @@ LOCAL_UTIL_LIBRARIES = ../lib/libcryph.so ../lib/libfont.so ../lib/libglsl.so ..
 GL_LIB_LOC = -L/usr/lib/nvidia-375
 GL_LIBRARIES = $(GL_LIB_LOC) -lglfw -lGLU -lGL
 
-OBJS = main.o ExtendedController.o PhongMaterial.o SceneElement.o Table.o Couch.o Room.o Lamp.o Light.o ECenter.o TVSet.o Tree.o Ornaments.o Vase.o Rug.o Flower.o Stem.o
+OBJS = main.o ExtendedController.o PhongMaterial.o SceneElement.o Table.o Couch.o Room.o Lamp.o Light.o ECenter.o TVSet.o Tree.o Ornaments.o Vase.o Rug.o Flower.o Stem.o Present.o
 
 main: $(OBJS) $(LOCAL_UTIL_LIBRARIES)
 	$(LINK) -o main $(OBJS) $(LOCAL_UTIL_LIBRARIES) $(GL_LIBRARIES)
@@ -53,6 +53,8 @@ ECenter.o: ECenter.h ECenter.c++
 	$(CPP) $(C_FLAGS) ECenter.c++
 Tree.o: Tree.h Tree.c++
 	$(CPP) $(C_FLAGS) Tree.c++
+Present.o: Present.h Present.c++
+	$(CPP) $(C_FLAGS) Present.c++
 Ornaments.o: Ornaments.h Ornaments.c++
 	$(CPP) $(C_FLAGS) Ornaments.c++
 Vase.o: Vase.h Vase.c++

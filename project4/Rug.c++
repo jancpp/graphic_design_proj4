@@ -112,22 +112,9 @@ void Rug::render()
 
 void Rug::renderRug()
 {
-    // 3. Establish material property parameters.
-    //    complete the implementation of SceneElement::establishMaterial
-    //    and then call it here.
-    // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 4; currentlyDrawingPiece++)
-    // 	if (piecesR[currentlyDrawingPiece] != nullptr)
-    // 		piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
     establishMaterial(rmatl); // walls
     if (piecesR[0] != nullptr)
         piecesR[0]->renderShape(prepareForFace, this);
-
-        // 4. Establish any other attributes and make one or more calls to
-    //    glDrawArrays and/or glDrawElements
-    //    If all or part of this model involves texture mapping (project 3
-    //    only), complete the implementation of SceneElement::establishTexture
-    //    and call it from here as needed immediately before any glDrawArrays
-    //    and/or glDrawElements calls to which texture is to be applied.
     establishTexture();
     glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
 }

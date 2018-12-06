@@ -2,7 +2,7 @@
 
 #include "Room.h"
 Room::Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const PhongMaterial &fmatlIn,
-           const char *rugTexImageSource, const PhongMaterial &rmatlIn, float rugWidth, float rugDepth,
+           const char *roomTexImageSource, const PhongMaterial &rmatlIn, float roomWidth, float roomDepth,
            const PhongMaterial &cmatlIn, const PhongMaterial &wmatlIn,
            cryph::AffPoint corner, cryph::AffVector u,
            double width, double height, double depth)
@@ -25,7 +25,7 @@ Room::Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const 
     defineFloorGeometry(floorTexImageSource, d);
     defineBackWallGeometry();
     defineRightWallGeometry();
-    // defineRugGeometry(rugTexImageSource, rugWidth, rugDepth);
+    // defineroomGeometry(roomTexImageSource, roomWidth, roomDepth);
 }
 
 Room::~Room()
