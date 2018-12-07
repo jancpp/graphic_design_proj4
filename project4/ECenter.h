@@ -28,10 +28,6 @@ public:
   void render();
   void renderECenter();
 private:
-	// IMPORTANT NOTE:
-	// The ShaderIF will be stored with the SceneElement piece of
-	// this object instance. You only need add instance variables here
-	// that are unique to the new subclass you are creating.
   PhongMaterial ecmatl;
   BasicShape *pieces[5];
   BasicShapeRenderer *piecesR[5];

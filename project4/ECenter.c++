@@ -101,30 +101,16 @@ void ECenter::render()
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
     
-    // 2. Establish "mc_ec" and "ec_lds" matrices
     establishView();
     
-    // 3. Establish Lighting environment
-    //    complete the implementation of SceneElement::establishLightingEnvironment
-    //    and then call it here.
     establishLightingEnvironment();
     
     renderECenter();
-    
-    // 6. Reestablish previous shader program
     glUseProgram(pgm);
 }
 
 void ECenter::renderECenter()
 {
-    // 4. Establish material property parameters.
-    //    complete the implementation of SceneElement::establishMaterial
-    //    and then call it here.
-    
-    // for (currentlyDrawingPiece = 0; currentlyDrawingPiece < 5; currentlyDrawingPiece++)
-    //     if (piecesR[currentlyDrawingPiece] != nullptr)
-    //         piecesR[currentlyDrawingPiece]->renderShape(prepareForFace, this);
-
     establishMaterial(ecmatl);
     if (piecesR[0] != nullptr)
         piecesR[0]->renderShape(nullptr, nullptr);
@@ -137,12 +123,6 @@ void ECenter::renderECenter()
     if (piecesR[4] != nullptr)
         piecesR[4]->renderShape(nullptr, nullptr);
 
-    // 5. Establish any other attributes and make one or more calls to
-    //    glDrawArrays and/or glDrawElements
-    //    If all or part of this model involves texture mapping (project 4
-    //    only), complete the implementation of SceneElement::establishTexture
-    //    and call it from here as needed immediately before any glDrawArrays
-    //    and/or glDrawElements calls to which texture is to be applied.
     establishTexture();
     glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
 }

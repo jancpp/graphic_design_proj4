@@ -78,7 +78,6 @@ void Vase::prepareForFace(void *caller, int faceIndex)
 
 void Vase::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());

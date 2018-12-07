@@ -95,18 +95,12 @@ void Lamp::render()
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-    
-    // 2. Establish "mc_ec" and "ec_lds" matrices
     establishView();
     
-    // 3. Establish Lighting environment
-    //    complete the implementation of SceneElement::establishLightingEnvironment
-    //    and then call it here.
     establishLightingEnvironment();
     
     renderLamp();
     
-    // 6. Reestablish previous shader program
     glUseProgram(pgm);
 }
 
