@@ -66,7 +66,7 @@ void SceneElement::establishLightingEnvironment()
             posToGLSL[4*i + 2] = inEC[2];
         }
     }
-
+    
     glUniform1i(shaderIF->ppuLoc("actualNumLights"), actualNumLights);
     glUniform4fv(shaderIF->ppuLoc("p_ecLightPos"), actualNumLights, posToGLSL);
     glUniform3fv(shaderIF->ppuLoc("lightStrength"), actualNumLights, lightStrength);
@@ -89,10 +89,10 @@ void SceneElement::establishMaterial(const PhongMaterial &matl)
 //       mentioned in the comments that follow.
 void SceneElement::establishTexture( /* ... parameters? ... */ )
 {
-     glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 1);
-     glUniform1i(shaderIF->ppuLoc("textureMap"), 0);
-     glActiveTexture(GL_TEXTURE0);
-     glBindTexture(GL_TEXTURE_2D, texID);
+    glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 1);
+    glUniform1i(shaderIF->ppuLoc("textureMap"), 0);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texID);
 }
 
 void SceneElement::establishView()
@@ -103,7 +103,7 @@ void SceneElement::establishView()
     float m[16];
     glUniformMatrix4fv(shaderIF->ppuLoc("mc_ec"), 1, false, mc_ec.extractColMajor(m));
     glUniformMatrix4fv(shaderIF->ppuLoc("ec_lds"), 1, false, ec_lds.extractColMajor(m));
-
+    
     ExtendedController *ec = dynamic_cast<ExtendedController *>(Controller::getCurrentController());
     glUniform1i(shaderIF->ppuLoc("sceneHasTranslucentObjects"), 1);
     if (ec->drawingOpaque())
@@ -137,5 +137,6 @@ GLuint SceneElement::readTextureImage(const std::string& imgFileName)
     const void* pixelData = oglIR->getTexture();
     glTexImage2D(GL_TEXTURE_2D, level, iFormat, pw, ph, border, format, type, pixelData);
     delete oglIR;
+    
     return texID[0];
 }

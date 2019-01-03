@@ -18,28 +18,28 @@
 class Couch : public SceneElement
 {
 public:
-  Couch(ShaderIF *sIF, PhongMaterial &couchMatlIn,
-		cryph::AffPoint corner, cryph::AffVector u,
-		double legHeight, double legRadius, double armRadius,
-		double CouchWidth, double CouchHeight, double CouchDepth);
-  virtual ~Couch();
-
-  void getMCBoundingBox(double *xyzLimits) const; // {xmin, xmax, ymin, ymax, zmin, zmax}
-  void render();
-  void renderCouch();
-
+    Couch(ShaderIF *sIF, PhongMaterial &couchMatlIn,
+          cryph::AffPoint corner, cryph::AffVector u,
+          double legHeight, double legRadius, double armRadius,
+          double CouchWidth, double CouchHeight, double CouchDepth);
+    virtual ~Couch();
+    
+    void getMCBoundingBox(double *xyzLimits) const; // {xmin, xmax, ymin, ymax, zmin, zmax}
+    void render();
+    void renderCouch();
+    
 private:
-	BasicShape* pieces[10];
-	BasicShapeRenderer* piecesR[10];
-	int currentlyDrawingPiece; // used only in context of "prepareForFace"
-	PhongMaterial couchMatl;
-	double xyz[6];
-
-	void defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-							   double legHeight, double legRadius, double armRadius,
-							   double CouchWidth, double CouchHeight, double CouchDepth);
-
-	static void prepareForFace(void *caller, int faceIndex);
+    BasicShape* pieces[10];
+    BasicShapeRenderer* piecesR[10];
+    int currentlyDrawingPiece; // used only in context of "prepareForFace"
+    PhongMaterial couchMatl;
+    double xyz[6];
+    
+    void defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
+                               double legHeight, double legRadius, double armRadius,
+                               double CouchWidth, double CouchHeight, double CouchDepth);
+    
+    static void prepareForFace(void *caller, int faceIndex);
 };
 
 #endif

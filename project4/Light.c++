@@ -17,7 +17,7 @@ Light::Light(ShaderIF *sIF, PhongMaterial &topMatlIn, PhongMaterial &bottomMatlI
         else
         {
             piecesR[i] = new BasicShapeRenderer(sIF, pieces[i]);
-            // avvumulate bounding box
+            // accumulate bounding box
             if (xyz[0] > xyz[1]) // not yet initialized
                 pieces[i]->getMCBoundingBox(xyz);
             else
@@ -83,7 +83,7 @@ void Light::render()
     glUseProgram(shaderIF->getShaderPgmID());
     
     establishView();
-   
+    
     establishLightingEnvironment();
     
     renderLight();

@@ -22,34 +22,34 @@ const int NUM_PPA_ATTRIBUTES = 3;
 class Room : public SceneElement
 {
 public:
-  Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const PhongMaterial &fmatlIn,
-       const char *rugTexImageSource, const PhongMaterial &rmatlIn, float rugWidth, float rugDepth,
-       const PhongMaterial &cmatlIn, const PhongMaterial &wmatlIn,
-       cryph::AffPoint corner, cryph::AffVector u,
-       double width, double height, double depth);
-  virtual ~Room();
-
-  void getMCBoundingBox(double *xyzLimitsF) const;
-  void render();
-  void renderFloor();
-  void renderBackWall();
-  void renderRightWall();
-  void renderCeiling();
-
+    Room(ShaderIF *sIF, const char *floorTexImageSource, const float d, const PhongMaterial &fmatlIn,
+         const char *rugTexImageSource, const PhongMaterial &rmatlIn, float rugWidth, float rugDepth,
+         const PhongMaterial &cmatlIn, const PhongMaterial &wmatlIn,
+         cryph::AffPoint corner, cryph::AffVector u,
+         double width, double height, double depth);
+    virtual ~Room();
+    
+    void getMCBoundingBox(double *xyzLimitsF) const;
+    void render();
+    void renderFloor();
+    void renderBackWall();
+    void renderRightWall();
+    void renderCeiling();
+    
 private:
-  PhongMaterial fmatl, rmatl, cmatl, wmatl;
-  GLenum wrapS, wrapT;
-  float xmin, xmax, ymin, ymax, zmin, zmax, d;
-  GLuint vao[NUM_PPA_ATTRIBUTES];
-  GLuint vboFloor[1];
-  GLuint vboBackWall[1];
-  GLuint vboRightWall[1];
-  GLuint vboCeiling[1];
-
-  void defineFloorGeometry(const char *floorTexImageSource, const float d);
-  void defineBackWallGeometry();
-  void defineRightWallGeometry();
-  void defineCeilingGeometry();
+    PhongMaterial fmatl, rmatl, cmatl, wmatl;
+    GLenum wrapS, wrapT;
+    float xmin, xmax, ymin, ymax, zmin, zmax, d;
+    GLuint vao[NUM_PPA_ATTRIBUTES];
+    GLuint vboFloor[1];
+    GLuint vboBackWall[1];
+    GLuint vboRightWall[1];
+    GLuint vboCeiling[1];
+    
+    void defineFloorGeometry(const char *floorTexImageSource, const float d);
+    void defineBackWallGeometry();
+    void defineRightWallGeometry();
+    void defineCeilingGeometry();
 };
 
 #endif

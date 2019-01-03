@@ -104,7 +104,7 @@ void Table::render()
     establishView();
     establishLightingEnvironment();
     glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
-
+    
     renderTable();
     
     glUseProgram(pgm);

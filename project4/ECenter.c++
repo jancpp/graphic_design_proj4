@@ -122,7 +122,7 @@ void ECenter::renderECenter()
         piecesR[3]->renderShape(nullptr, nullptr);
     if (piecesR[4] != nullptr)
         piecesR[4]->renderShape(nullptr, nullptr);
-
+    
     establishTexture();
     glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
 }

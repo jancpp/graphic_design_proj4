@@ -3,8 +3,8 @@
 #include "Present.h"
 
 Present::Present(ShaderIF *sIF, const char *presentTexImageSource, PhongMaterial &pMatlIn,
-              cryph::AffPoint corner, cryph::AffVector u,
-              double presentWidth, double presentHeight, double presentDepth)
+                 cryph::AffPoint corner, cryph::AffVector u,
+                 double presentWidth, double presentHeight, double presentDepth)
 : SceneElement(sIF), pMatl(pMatlIn)
 {
     defineInitialGeometry(corner, u,
@@ -48,7 +48,7 @@ Present::~Present()
 }
 
 void Present::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-                                  double presentWidth, double presentHeight, double presentDepth)
+                                    double presentWidth, double presentHeight, double presentDepth)
 {
     // we assume the present is parallel to xy-plane, hence:
     cryph::AffVector uu(u[0], u[1], 0.0);
@@ -56,12 +56,12 @@ void Present::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
     uu.normalize();
     cryph::AffVector vv = ww.cross(uu);
     corner = corner + ww * 0.01 + vv * 0.01; // to avoid bleading in to wall and floor
-
+    
     pieces[0] = BasicShape::makeBlock(corner,
                                       uu, presentWidth,
                                       ww, presentHeight,
                                       vv, presentDepth);
-
+    
 }
 
 void Present::getMCBoundingBox(double *xyzLimits) const
@@ -72,29 +72,28 @@ void Present::getMCBoundingBox(double *xyzLimits) const
 
 void Present::prepareForFace(void *caller, int faceIndex)
 {
-        if (caller != nullptr)
-        {
-            Present *p = reinterpret_cast<Present *>(caller);
-            
-                p->piecesR[0]->setTexCoordsForBlock(faceIndex);
-                p->establishTexture();
-
-        }
+    if (caller != nullptr)
+    {
+        Present *p = reinterpret_cast<Present *>(caller);
+        
+        p->piecesR[0]->setTexCoordsForBlock(faceIndex);
+        p->establishTexture();
+        
+    }
 }
 
 void Present::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-
+    
     establishView();
-
+    
     establishLightingEnvironment();
-
+    
     renderPresent();
-
+    
     glUseProgram(pgm);
 }
 

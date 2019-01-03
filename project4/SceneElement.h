@@ -23,25 +23,25 @@ typedef float vec3[3];
 class SceneElement : public ModelView
 {
 public:
-	SceneElement(ShaderIF* sIF);
-	virtual ~SceneElement();
-
-	static GLuint readTextureImage(const std::string& imgFileName);
-
+    SceneElement(ShaderIF* sIF);
+    virtual ~SceneElement();
+    
+    static GLuint readTextureImage(const std::string& imgFileName);
+    
 protected:
-	ShaderIF* shaderIF;
-
-	void establishLightingEnvironment(/* ... parameters? ... */);
-	void establishMaterial(const PhongMaterial &matl);
-	void establishTexture(/* ... parameters? ... */);
-	void establishView();
-	GLuint texID = 0;
-
-	// lighting environment
-	static float lightPos[4 * MAX_NUM_LIGHTS];		   // (x,y,z,w) for each light
-	static bool posInModelCoordinates[MAX_NUM_LIGHTS]; // pos is in MC or EC?
-	static float lightStrength[3*MAX_NUM_LIGHTS]; // (r,g,b) for each light
-	static float globalAmbient[3]; // (r,g,b) for ambient term, A
+    ShaderIF* shaderIF;
+    
+    void establishLightingEnvironment();
+    void establishMaterial(const PhongMaterial &matl);
+    void establishTexture();
+    void establishView();
+    GLuint texID = 0;
+    
+    // lighting environment
+    static float lightPos[4 * MAX_NUM_LIGHTS];		   // (x,y,z,w) for each light
+    static bool posInModelCoordinates[MAX_NUM_LIGHTS]; // pos is in MC or EC?
+    static float lightStrength[3*MAX_NUM_LIGHTS]; // (r,g,b) for each light
+    static float globalAmbient[3]; // (r,g,b) for ambient term, A
 };
 
 #endif

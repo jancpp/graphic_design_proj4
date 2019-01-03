@@ -13,7 +13,7 @@ Lamp::Lamp(ShaderIF *sIF, PhongMaterial &topMatlIn, PhongMaterial &poleMatlIn, P
     defineInitialGeometry(corner, u,
                           lampHeigth,
                           topRadius, midRadius,
-                          poleHeight, poleRadius, 
+                          poleHeight, poleRadius,
                           baseRadius);
     xyz[0] = 1.0;
     xyz[1] = 0.0;
@@ -91,7 +91,6 @@ void Lamp::prepareForFace(void *caller, int faceIndex)
 
 void Lamp::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());

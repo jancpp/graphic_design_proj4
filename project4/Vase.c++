@@ -5,7 +5,7 @@
 Vase::Vase(ShaderIF *sIF, PhongMaterial &vaseMatlIn,
            cryph::AffPoint corner, cryph::AffVector u,
            double VaseHeigth, double topRadius, double baseRadius)
-    : SceneElement(sIF), vaseMatl(vaseMatlIn)
+: SceneElement(sIF), vaseMatl(vaseMatlIn)
 {
     defineInitialGeometry(corner, u,
                           VaseHeigth,
@@ -49,18 +49,18 @@ Vase::~Vase()
 }
 
 void Vase::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-                double VaseHeigth, double topRadius, double baseRadius)
+                                 double VaseHeigth, double topRadius, double baseRadius)
 {
     cryph::AffVector uu(u[0], u[1], 0.0);
     uu.normalize();
     cryph::AffVector ww(0, 0, 1);
     cryph::AffVector vv = ww.cross(uu);
-
+    
     cryph::AffPoint bottom = corner;
     cryph::AffPoint top = bottom +
-                          ww * VaseHeigth;
-
-     // top part / cone
+    ww * VaseHeigth;
+    
+    // top part / cone
     const cryph::AffVector sZero = cryph::AffVector::xu;
     pieces[0] = BasicShape::makeBoundedCone(bottom, bottom + ww * VaseHeigth,
                                             baseRadius, topRadius, 20, 20, BasicShape::CAP_AT_BOTTOM);

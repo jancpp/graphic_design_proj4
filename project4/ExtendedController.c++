@@ -48,19 +48,19 @@ void ExtendedController::handleDisplay()
     glClear(glClearFlags);
     glDepthMask(GL_TRUE);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     // draw opaque objects
     glDisable(GL_BLEND);
     drawingOpaqueObjects = true; // record in instance variable so ModelView instances can query
     renderAllModels();
-
+    
     // draw translucent objects
     glDepthMask(GL_FALSE);
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     drawingOpaqueObjects = false; // record in instance variable so ModelView instances can query
     renderAllModels();
-
+    
     swapBuffers();
 }
 

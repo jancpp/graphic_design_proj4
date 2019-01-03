@@ -128,12 +128,12 @@ void Couch::render()
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-        establishView();
+    establishView();
     
     establishLightingEnvironment();
     
     renderCouch();
-        glUseProgram(pgm);
+    glUseProgram(pgm);
 }
 
 void Couch::renderCouch()

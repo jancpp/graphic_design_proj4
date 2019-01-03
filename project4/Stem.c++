@@ -6,7 +6,7 @@ Stem::Stem(ShaderIF *sIF, PhongMaterial &matlIn,
            cryph::AffPoint corner, cryph::AffVector u,
            double stemHeigth,
            double topRadius, double stemRadius)
-    : SceneElement(sIF), matl(matlIn)
+: SceneElement(sIF), matl(matlIn)
 {
     defineInitialGeometry(corner, u,
                           stemHeigth,
@@ -56,7 +56,7 @@ void Stem::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
     uu.normalize();
     cryph::AffVector ww(0, 0, 1);
     cryph::AffVector vv = ww.cross(uu);
-
+    
     cryph::AffPoint bottom = corner;
     cryph::AffPoint top = bottom + ww * stemHeigth + uu * 2.0;
     const cryph::AffVector sZero = cryph::AffVector::xu;
@@ -77,16 +77,15 @@ void Stem::prepareForFace(void *caller, int faceIndex)
 
 void Stem::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-
+    
     glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
     establishView();
     establishLightingEnvironment();
     renderStem();
-
+    
     glUseProgram(pgm);
 }
 

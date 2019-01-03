@@ -27,7 +27,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     cryph::AffVector v1(0.0, 1.0, 0.0);
     cryph::AffVector w1(0.0, 0.0, 1.0);
     cryph::AffVector k1(1.0, 1.0, 0.0);
-
+    
     // units are in inches
     double roomHeight = 120.0, roomWidth = 240.0, roomDepth = 144.0;
     double rugWidth = 95.0, rugDepth = 60.0;
@@ -46,7 +46,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     double poleHeight = 18.0, poleRadius = 1.5, baseRadius = 6.0;
     double flowerHeight = 18, flowerTopRadius = 3.5, flowerBaseRadius = 0.3;
     double stemHeight = 18, stemTopRadius = 0.2, stemBaseRadius = 0.3;
-
+    
     const char *floorTexImageSource = "images/wood.jpg";
     const float floordIn = 35;
     const char *rugTexImageSource = "images/rug.jpg";
@@ -82,11 +82,11 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                           0.6, 0.6, 0.6,
                           80.0, 1.0);
     PhongMaterial whiteMatl(1.0, 1.0, 1.0,
-                          0.6, 0.6, 0.6,
-                          80.0, 1.0);
+                            0.6, 0.6, 0.6,
+                            80.0, 1.0);
     PhongMaterial blueMatl(0.0, 0.0, 1.0,
-                          0.6, 0.6, 0.6,
-                          80.0, 1.0);
+                           0.6, 0.6, 0.6,
+                           80.0, 1.0);
     PhongMaterial couchMatl(0.75, 0.0, 0.0,
                             0.35, 0.2, 0.1,
                             2.0, 1.0);
@@ -124,7 +124,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     cryph::AffPoint p17(midRoom.x,
                         midRoom.y ,
                         midRoom.z + tableHeight);
-
+    
     Vase *vs1 = new Vase(sIF, vaseMatl,
                          p17, u1,
                          vaseHeight, vaseTopRadius, vaseBaseRadius);
@@ -144,40 +144,40 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     c.addModel(f3a);
     Stem *f3b = new Stem(sIF, treeMatl, p17, u3, stemHeight + 6.0, stemTopRadius, stemBaseRadius);
     c.addModel(f3b);
-
+    
     // rug
     Rug *r2 = new Rug(sIF, rugTexImageSource, rugMatl,
                       p1, u1,
                       rugWidth, rugDepth,
                       roomWidth, roomHeight, roomDepth);
     c.addModel(r2);
-
+    
     // couch
     cryph::AffPoint p2(midRoom.x - couchWidth / 2, roomDepth, 0.0);
-
+    
     Couch *c1 = new Couch(sIF, couchMatl, p2, u1,
                           4.0, 3.0, 5.0, couchWidth, couchHeight, couchDepth);
     c.addModel(c1);
-
+    
     // arm chair
     cryph::AffPoint p22(0.01, (roomDepth - armChairWidth) / 2, 0.0);
     Couch *c2 = new Couch(sIF, couchMatl, p22, v1,
                           4.0, 3.0, 5.0, armChairWidth, armChairHeight, armChairDepth);
     c.addModel(c2);
-
+    
     // left end table
     cryph::AffPoint p3(p2.x - endTableWidth - 2.0, roomDepth, 0.0);
-
+    
     Table *t1 = new Table(sIF, tableMatl, p3, u1,
                           4.5, 2.0, endTableWidth, endTableHeight, endTableDepth);
     c.addModel(t1);
-
+    
     // right end table
     cryph::AffPoint p4(p2.x + couchWidth + 2.0, roomDepth, 0.0);
     Table *t2 = new Table(sIF, tableMatl, p4, u1,
                           4.5, 2.0, endTableWidth, endTableHeight, endTableDepth);
     c.addModel(t2);
-
+    
     // table
     cryph::AffPoint p5(midRoom.x - tableWidth / 2,
                        midRoom.y + tableDepth / 2,
@@ -185,8 +185,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
     Table *t3 = new Table(sIF, tableMatl, p5, u1,
                           4.5, 2.0, tableWidth, tableHeight, tableDepth);
     c.addModel(t3);
-
-    // lamps:
+    
     // left lamp
     cryph::AffPoint p6(p3.x + endTableWidth / 2,
                        p3.y - endTableDepth / 2,
@@ -198,6 +197,7 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         poleHeight, poleRadius,
                         baseRadius);
     c.addModel(l1);
+    
     // right lamp
     cryph::AffPoint p7(p4.x + endTableWidth / 2,
                        p4.y - endTableDepth / 2,
@@ -209,29 +209,27 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                         poleHeight, poleRadius,
                         baseRadius);
     c.addModel(l2);
-
+    
     // entertainment center
     cryph::AffPoint p8(roomWidth, midRoom.y + ecWidth / 2, 0.01);
-
+    
     ECenter *ec1 = new ECenter(sIF, ecMatl, p8, -v1, ecWidth, ecHeight, ecDepth);
     c.addModel(ec1);
-
+    
     // TV set
     cryph::AffPoint p9(roomWidth - ecDepth/2, midRoom.y + tvWidth / 2, ecHeight);
     const char *tvTexImageSource = "images/mahomes.png";
-
+    
     TVSet *tv1 = new TVSet(sIF, tvTexImageSource, tvMatl, p9, -v1, tvWidth, tvHeight, tvDepth);
     c.addModel(tv1);
-
+    
     // light
-
-
     cryph::AffPoint p10(midRoom.x, midRoom.y, roomHeight);
     Light *l3 = new Light(sIF, poleMatl, bottomMatl,
                           p10, u1,
                           lightHeigth, lightRadius);
     // c.addModel(l3);
-
+    
     // christmas tree
     cryph::AffPoint p11(p1.x + roomWidth - 20, p1.y + 20, 14.0);
     cryph::AffPoint p12(p1.x + roomWidth - 20, p1.y + 20, 0.01);
@@ -250,40 +248,40 @@ void createScene(ExtendedController &c, ShaderIF *sIF, ShaderIF *sIFwGeoL, Shade
                                    30, 1.0,
                                    topRadius);
     c.addModel(xmasTreeStand);
-
     Ornaments *xmasOrnamentsYellow = new Ornaments(sIFwGeoM, yellowMatl,
                                                    p11, u1,
                                                    treeHeigth, topRadius, midRadius, baseRadius, 2);
     c.addModel(xmasOrnamentsYellow);
     Ornaments *xmasOrnamentsRed = new Ornaments(sIFwGeoM, redMatl,
-                                                   p11, u1,
-                                                   treeHeigth, topRadius, midRadius, baseRadius, 4);
+                                                p11, u1,
+                                                treeHeigth, topRadius, midRadius, baseRadius, 4);
     c.addModel(xmasOrnamentsRed);
+    
     // presents
     cryph::AffPoint p13(p12.x - treeBaseRadius*2, p12.y + treeBaseRadius/2, 0.01);
     cryph::AffPoint p14(p13.x-5, p13.y - 12, 0.01);
-
+    
     Present *pr1 = new Present(sIF, presentTexImageSource2, whiteMatl,
-                              p13, u2,
-                              presentWidth1, presentHeight1, presentDepth1);
+                               p13, u2,
+                               presentWidth1, presentHeight1, presentDepth1);
     c.addModel(pr1);
-
+    
     Present *pr2 = new Present(sIF, presentTexImageSource1, whiteMatl,
-                              p14, u2,
-                              presentWidth2, presentHeight2, presentDepth2);
+                               p14, u2,
+                               presentWidth2, presentHeight2, presentDepth2);
     c.addModel(pr2);
 }
 
 void set3DViewingInformation(double overallBB[])
 {
-    // IF we are using Viewing Strategy #1, THEN
-    //     Notify class ModelView that we initially want to see the entire scene:
+    // Viewing Strategy #1,
+    // Notify class ModelView that we initially want to see the entire scene:
     ModelView::setMCRegionOfInterest(overallBB);
     // diameter r = max(Δx/2, Δy/2, Δz/2)
     double xdelta = overallBB[1] - overallBB[0];
     double ydelta = overallBB[3] - overallBB[2];
     double zdelta = overallBB[5] - overallBB[4];
-
+    
     double diameter = xdelta;
     if (ydelta > diameter) {
         diameter = ydelta;
@@ -291,12 +289,12 @@ void set3DViewingInformation(double overallBB[])
     if (zdelta > diameter) {
         diameter = zdelta;
     }
-
+    
     // Midpoints
     double xmid = 0.5 * (overallBB[0] + overallBB[1]);
     double ymid = 0.5 * (overallBB[2] + overallBB[3]);
     double zmid = 0.5 * (overallBB[4] + overallBB[5]);
-
+    
     // MC -> EC:
     // Compute/set eye, center, up
     cryph::AffPoint center(xmid, ymid, zmid);
@@ -304,22 +302,22 @@ void set3DViewingInformation(double overallBB[])
     cryph::AffPoint eye(xmid, ymid, zmid + distEyeCenter);
     cryph::AffVector up = cryph::AffVector::yu;
     ModelView::setEyeCenterUp(eye, center, up);
-
+    
     // EC -> LDS:
     // Specify the initial projection type desired
     ModelView::setProjection(PERSPECTIVE);
-
+    
     // Compute/set ecZpp
     double ecZpp = -(distEyeCenter - (0.5*diameter));
     ModelView::setProjectionPlaneZ(ecZpp);
-
+    
     // Compute/set ecZmin, ecZmax (It is often useful to exaggerate
     //       these limits somewhat to prevent unwanted depth clipping.)
     double ecZmin, ecZmax;
-
+    
     ecZmin = ecZpp - (1.5 * diameter);
     ecZmax = ecZpp + (0.5 * diameter);
-
+    
     ModelView::setECZminZmax(ecZmin, ecZmax);
 }
 
@@ -327,7 +325,7 @@ int main(int argc, char* argv[])
 {
     ExtendedController c("MY LIVING ROOM", MVC_USE_DEPTH_BIT);
     c.reportVersions(std::cout);
-
+    
     ShaderIF *sIF = new ShaderIF("shaders/basic.vsh", "shaders/phong.fsh");
     ShaderIF::ShaderSpec glslProgL[] = {
         {"shaders/basic.vsh", GL_VERTEX_SHADER},
@@ -337,23 +335,23 @@ int main(int argc, char* argv[])
         {"shaders/basic.vsh", GL_VERTEX_SHADER},
         {"shaders/shrinkMore.gsh", GL_GEOMETRY_SHADER},
         {"shaders/phong.fsh", GL_FRAGMENT_SHADER}};
-
+    
     ShaderIF *sIFwGeoL = new ShaderIF(glslProgL, 3);
     ShaderIF *sIFwGeoM = new ShaderIF(glslProgM, 3);
     createScene(c, sIF, sIFwGeoL, sIFwGeoM);
-
+    
     glClearColor(1.0, 1.0, 1.0, 1.0);
-
+    
     double xyz[6];
     c.getOverallMCBoundingBox(xyz);
     std::cout << "Bounding box: " << xyz[0] << " <= x <= " << xyz[1] << '\n';
     std::cout << "              " << xyz[2] << " <= y <= " << xyz[3] << '\n';
     std::cout << "              " << xyz[4] << " <= z <= " << xyz[5] << "\n\n";
     set3DViewingInformation(xyz);
-
+    
     c.run();
-
+    
     delete sIF;
-
+    
     return 0;
 }

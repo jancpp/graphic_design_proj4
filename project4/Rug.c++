@@ -3,15 +3,15 @@
 #include "Rug.h"
 
 Rug::Rug(ShaderIF *sIF, const char *rugTexImageSource, const PhongMaterial &rmatlIn,
-           cryph::AffPoint corner, cryph::AffVector u,
-           double rugWidth, double rugDepth,
-           double width, double height, double depth) : SceneElement(sIF), rmatl(rmatlIn)
+         cryph::AffPoint corner, cryph::AffVector u,
+         double rugWidth, double rugDepth,
+         double width, double height, double depth) : SceneElement(sIF), rmatl(rmatlIn)
 {
     defineInitialGeometry(corner, u,
                           rugWidth, rugDepth,
                           width, height, depth);
     texID = readTextureImage(rugTexImageSource);
-
+    
     xyz[0] = 1.0;
     xyz[1] = 0.0;
     for (int i=0 ; i<1 ; i++)
@@ -50,16 +50,16 @@ Rug::~Rug()
 }
 
 void Rug::defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-                                 double rugWidth, double rugDepth,
-                                 double width, double height, double depth)
+                                double rugWidth, double rugDepth,
+                                double width, double height, double depth)
 {
-
+    
     cryph::AffVector uu(u[0], u[1], 0.0);
     uu.normalize();
     cryph::AffVector vv(0, 1, 0);
     cryph::AffVector ww = vv.cross(uu);
-
-
+    
+    
     // rug
     pieces[0] = BasicShape::makeBlock(corner + uu * (width - rugWidth) / 2 +
                                       vv * (depth - rugDepth) / 2 -
@@ -95,18 +95,16 @@ void Rug::prepareForFace(void *caller, int faceIndex)
 
 void Rug::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-
+    
     glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 1);
     establishView();
     establishLightingEnvironment();
-
+    
     renderRug();
-
-    // 6. Reestablish previous shader program
+    
     glUseProgram(pgm);
 }
 

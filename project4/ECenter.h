@@ -18,25 +18,25 @@
 class ECenter : public SceneElement
 {
 public:
-  ECenter(ShaderIF *sIF, const PhongMaterial &ecmatlIn,
-		  cryph::AffPoint corner, cryph::AffVector u,
-		  double width, double height, double depth);
-  virtual ~ECenter();
-
-  // xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
-  void getMCBoundingBox(double *xyzLimitsF) const;
-  void render();
-  void renderECenter();
+    ECenter(ShaderIF *sIF, const PhongMaterial &ecmatlIn,
+            cryph::AffPoint corner, cryph::AffVector u,
+            double width, double height, double depth);
+    virtual ~ECenter();
+    
+    // xyzLimits: {mcXmin, mcXmax, mcYmin, mcYmax, mcZmin, mcZmax}
+    void getMCBoundingBox(double *xyzLimitsF) const;
+    void render();
+    void renderECenter();
 private:
-  PhongMaterial ecmatl;
-  BasicShape *pieces[5];
-  BasicShapeRenderer *piecesR[5];
-  double xyz[6];
-  int currentlyDrawingPiece;
-
-  void defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
-							 double width, double height, double depth);
-  static void prepareForFace(void *caller, int faceIndex);
+    PhongMaterial ecmatl;
+    BasicShape *pieces[5];
+    BasicShapeRenderer *piecesR[5];
+    double xyz[6];
+    int currentlyDrawingPiece;
+    
+    void defineInitialGeometry(cryph::AffPoint corner, cryph::AffVector u,
+                               double width, double height, double depth);
+    static void prepareForFace(void *caller, int faceIndex);
 };
 
 #endif

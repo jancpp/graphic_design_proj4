@@ -10,44 +10,44 @@ layout ( triangle_strip, max_vertices = 4 ) out;
 
 in PVA
 {
-	vec3 ecPosition;
-	vec3 ecUnitNormal;
-	vec2 texCoords; // (s,t)
+    vec3 ecPosition;
+    vec3 ecUnitNormal;
+    vec2 texCoords; // (s,t)
 } pvaIn[];
 
 out PVA
 {
-	vec3 ecPosition;
-	vec3 ecUnitNormal;
-	vec2 texCoords; // (s,t)
+    vec3 ecPosition;
+    vec3 ecUnitNormal;
+    vec2 texCoords; // (s,t)
 } pvaOut; // We write one vertex at a time, hence pva_out is NOT an array.
 
 uniform float shrinkFactor = 0.7;
 
 void outputAttributesFor(int i)
 {
-	pvaOut.ecPosition = pvaIn[i].ecPosition;
-	pvaOut.ecUnitNormal = pvaIn[i].ecUnitNormal;
-	pvaOut.texCoords = pvaIn[i].texCoords;
+    pvaOut.ecPosition = pvaIn[i].ecPosition;
+    pvaOut.ecUnitNormal = pvaIn[i].ecUnitNormal;
+    pvaOut.texCoords = pvaIn[i].texCoords;
 }
 
 void shrinkTriangle(vec4 v0, vec4 v1, vec4 v2, float factor)
 {
-	vec4 centerOfGravity = (v0 + v1 + v2) / 3.0;
-	gl_Position = centerOfGravity + factor * (v0 - centerOfGravity);
-	outputAttributesFor(0);
-	EmitVertex();
-	gl_Position = centerOfGravity + factor * (v1 - centerOfGravity);
-	outputAttributesFor(1);
-	EmitVertex();
-	gl_Position = centerOfGravity + factor * (v2 - centerOfGravity);
-	outputAttributesFor(2);
-	EmitVertex();
-
-	EndPrimitive();
+    vec4 centerOfGravity = (v0 + v1 + v2) / 3.0;
+    gl_Position = centerOfGravity + factor * (v0 - centerOfGravity);
+    outputAttributesFor(0);
+    EmitVertex();
+    gl_Position = centerOfGravity + factor * (v1 - centerOfGravity);
+    outputAttributesFor(1);
+    EmitVertex();
+    gl_Position = centerOfGravity + factor * (v2 - centerOfGravity);
+    outputAttributesFor(2);
+    EmitVertex();
+    
+    EndPrimitive();
 }
 
 void main()
 {
-	shrinkTriangle(gl_in[0].gl_Position, gl_in[1].gl_Position, gl_in[2].gl_Position, shrinkFactor);
+    shrinkTriangle(gl_in[0].gl_Position, gl_in[1].gl_Position, gl_in[2].gl_Position, shrinkFactor);
 }

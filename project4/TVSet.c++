@@ -5,13 +5,12 @@
 TVSet::TVSet(ShaderIF *sIF, const char *tvTexImageSource, PhongMaterial &tvMatlIn,
              cryph::AffPoint corner, cryph::AffVector u,
              double tvWidth, double tvHeight, double tvDepth)
-    : SceneElement(sIF), tvMatl(tvMatlIn)
-// , wrapS(GL_CLAMP_TO_BORDER), wrapT(GL_CLAMP_TO_BORDER)
+: SceneElement(sIF), tvMatl(tvMatlIn)
 {
     defineInitialGeometry(corner, u,
                           tvWidth, tvHeight, tvDepth);
     texID = readTextureImage(tvTexImageSource);
-
+    
     xyz[0] = 1.0;
     xyz[1] = 0.0;
     for (int i = 0; i < 3; i++)
@@ -85,9 +84,6 @@ void TVSet::getMCBoundingBox(double *xyzLimits) const
 
 void TVSet::prepareForFace(void *caller, int faceIndex)
 {
-    // check if texure is active
-    // std::cout << "caller: " << caller << ", faceIndex: " << faceIndex << "\n";
-
     if (caller != nullptr) {
         TVSet *tv = reinterpret_cast<TVSet*>(caller);
         if (faceIndex == 5) {
@@ -103,11 +99,10 @@ void TVSet::prepareForFace(void *caller, int faceIndex)
 
 void TVSet::render()
 {
-    // 1. Save current and establish new current shader program
     GLint pgm;
     glGetIntegerv(GL_CURRENT_PROGRAM, &pgm);
     glUseProgram(shaderIF->getShaderPgmID());
-
+    
     glUniform1i(shaderIF->ppuLoc("drawingOpaqueObjects"), 0);
     establishView();
     establishLightingEnvironment();
@@ -117,9 +112,9 @@ void TVSet::render()
 
 void TVSet::renderTVSet()
 {
-
+    
     establishMaterial(tvMatl); // black
-
+    
     if (piecesR[0] != nullptr) 
         piecesR[0]->renderShape(prepareForFace, this);
     glUniform1i(shaderIF->ppuLoc("usingTextureMap"), 0);
