@@ -1,5 +1,6 @@
+
+#EECS 672 - Project 4
 Author: Jan Polzer
-Name: EECS 672 - Project 4
 Description: A Model of 3D Scene
 
 To run on Mac::
